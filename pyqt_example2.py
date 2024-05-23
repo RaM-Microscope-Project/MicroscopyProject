@@ -1,38 +1,17 @@
-import sys, platform
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QPushButton,
-    QVBoxLayout,
-    QWidget,
-    QLabel,
-    QDial,
-    QGroupBox,
-    QRadioButton,
-    QButtonGroup,
-    QHBoxLayout
-)
-import serial
-import time
-import os
-WINDOW_SIZE = 350
-DISPLAY_HEIGHT = 35
-BUTTON_SIZE = 40
-ERROR_MSG = "ERROR"
+"""
+Python 3/PyQt5 + picamera2 to control Raspberry Pi Camera Modules
+Tested on Raspberry Pi 5/64-bit Raspberry Pi OS (bookworm)
+# in my setup:
+# Picamera2(0) - HQ Camera
+# Picamera2(1) - Camera Module 3
 
-os.environ['DISPLAY'] = ':0'
-
-
-# -------------------- Camera Preview Code ---------------------------------------------------------
-import time
-from importlib.metadata import version
-
-
-
+picam2_qt5_2023-12-28.py first exercise
+picam2_qt5_2024-01-03.py Added Auto-Focus feature detection, and switch AF Mode between Continuous & Manual
+picam2_qt5_2024-01-07.py Display Preview in seperated window, both Main/Preview windows have Capture button.
+"""
+import sys, platform, os
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QPushButton, QLabel, QCheckBox,
                              QWidget, QTabWidget, QVBoxLayout, QGridLayout)
-
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 
@@ -40,9 +19,18 @@ from picamera2 import Picamera2
 from picamera2.previews.qt import QGlPicamera2
 from picamera2 import __name__ as picamera2_name
 from libcamera import controls
-picam2 = Picamera2() 
+
+import time
+from importlib.metadata import version
 
 
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = '/usr/lib/python3/dist-packages/PyQt5'
+os.environ['DISPLAY'] = ':0'
+os.environ["LIBCAMERA_LOG_LEVELS"] = "3"
+
+picam2 = Picamera2()   #default to Picamera2(0) without parameter passed
+# picam2 = Picamera2(1)
+#=====================================
 preview_width= 1000
 preview_height = int(picam2.sensor_resolution[1] * preview_width/picam2.sensor_resolution[0])
 preview_config_raw = picam2.create_preview_configuration(main={"size": (preview_width, preview_height)},
@@ -50,10 +38,8 @@ preview_config_raw = picam2.create_preview_configuration(main={"size": (preview_
                                                          
 picam2.configure(preview_config_raw)
 picam2.set_controls({"ColourGains": (1.85, 1.85)}) #Tuple of two floating point numbers between 0.0 and 32.0.
-
-os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = '/usr/lib/python3/dist-packages/PyQt5'
-# --------------------------------------------------------------------------------------------------
-
+#=====================================
+#Detect if AF function is available
 AF_Function = True
 AF_Enable = True
 try:
@@ -62,152 +48,23 @@ try:
 except RuntimeError as err:
     print("RuntimeError:", err)
     AF_Function = False
-    
 
+#=====================================
 
-
-class ArduinoModel:
-    """Model class representing the Arduino-related data and logic."""
+class App(QMainWindow):
 
     def __init__(self):
-        self.led_state = False  # Initial state: LED is off
-        self.rgb_led_color = None  # Initial state: RGB LED color is not selected
-        self.servo_position = 0  # Initial state: Servo position is 0
-
-    def toggle_led(self):
-        self.led_state = not self.led_state
-
-    def set_rgb_led_color(self, color):
-        self.rgb_led_color = color
-
-    def set_servo_position(self, position):
-        self.servo_position = position
-
-    def get_led_status(self):
-        return self.led_state
-
-
-class ArduinoController:
-    """Controller class handling user input and updating the model."""
-
-    def __init__(self, model):
-        self.model = model
-        self.serial_connection = serial.Serial('/dev/ttyACM0', 9600)
-
-    def handle_led_button_click(self):
-        self.model.toggle_led()
-        led_data = f"{self.model.get_led_status()}\n"
-        print(f"Toggle LED, message : {led_data}")
-        self.send_serial_message(led_data)
-
-    def handle_rgb_led_color_change(self, color):
-        print(f"RGB LED Color : {color}")
-        self.model.set_rgb_led_color(color)
-        # Red = 1, Green = 2, Blue = 3
-        color_data = None
-        if (color == "Red"):
-            color_data = f"RGB-1\n"
-        elif (color == "Green"):
-            color_data = f"RGB-2\n"
-        else:
-            color_data = f"RGB-3\n"
-        print(f"Sending serial command : {color_data}")
-        self.send_serial_message(color_data)
-
-    def handle_servo_position_change(self, position):
-        servo_data = f"SERVO-{position}\n"
-        self.model.set_servo_position(position)
-        print(f"Servo Position : {servo_data}")
-        self.send_serial_message(servo_data)
-        time.sleep(0.3)
-
-    def send_serial_message(self, message):
-        self.serial_connection.write(message.encode())
-
-
-class PyControllerWindow(QMainWindow):
-    """View class representing the user interface."""
-
-    def __init__(self, controller):
         super().__init__()
-        self.setWindowTitle("Arduino Control")
-        self.setFixedSize(WINDOW_SIZE, WINDOW_SIZE)
-        self.layout = QVBoxLayout()
-        self.layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
-
-        self.centralWidget = QWidget()
-        self.centralWidget.setLayout(self.layout)
-        self.setCentralWidget(self.centralWidget)
+        self.title = __file__
+        self.left = 0
+        self.top = 0
+        self.setWindowTitle(self.title)
 
         self.main_widget = MyMainWidget(self)
-
-        self.controller = controller
-        self._create_ui_display()
-
-    def _create_ui_display(self):
-
-
-        # Group Box for LED-related widgets
-        led_group = QGroupBox("LED Control")
-        led_layout = QVBoxLayout()
-
-        led_label = QLabel("Turn On LED")
-        led_button = QPushButton("Toggle LED")
-        led_button.clicked.connect(self.controller.handle_led_button_click)
-
-        led_layout.addWidget(led_label)
-        led_layout.addWidget(led_button)
-
-        led_group.setLayout(led_layout)
-        self.layout.addWidget(led_group)
-
-        # Create a button group for RGB LED
-        radio_group = QGroupBox("RGB LED Control")
-        radio_layout = QHBoxLayout()
-
-        red = QRadioButton("Red", self)
-        green = QRadioButton("Green", self)
-        blue = QRadioButton("Blue", self)
-
-        rgb_button_group = QButtonGroup(self)
-        rgb_button_group.addButton(red)
-        rgb_button_group.addButton(green)
-        rgb_button_group.addButton(blue)
-        rgb_button_group.buttonClicked.connect(self.handle_rgb_led_color_change)
-
-        radio_layout.addWidget(red)
-        radio_layout.addWidget(green)
-        radio_layout.addWidget(blue)
-
-        radio_group.setLayout(radio_layout)
-        self.layout.addWidget(radio_group)
-
-        # Group Box for Servo-related widgets
-        servo_group = QGroupBox("Servo Control")
-        servo_layout = QVBoxLayout()
-
-        servo_label = QLabel("Set servo position")
-        servo_dial = QDial()
-        servo_dial.setMinimum(0)
-        servo_dial.setMaximum(180)
-        servo_dial.setNotchesVisible(True)
-        servo_dial.setOrientation(Qt.Orientation.Horizontal)
-        servo_dial.valueChanged.connect(self.handle_servo_position_change)
-
-        servo_layout.addWidget(servo_label)
-        servo_layout.addWidget(servo_dial)
-
-        servo_group.setLayout(servo_layout)
-        self.layout.addWidget(servo_group)
-
-    def handle_rgb_led_color_change(self, button):
-        color = button.text()
-        self.controller.handle_rgb_led_color_change(color)
-
-    def handle_servo_position_change(self, position):
-        self.controller.handle_servo_position_change(position)
-
-
+        self.setCentralWidget(self.main_widget)
+        
+        self.show()
+        
 class MyMainWidget(QWidget):
     
     #--- MyPreviewWidget ---
@@ -271,18 +128,18 @@ class MyMainWidget(QWidget):
         self.childPreviewLayout = QVBoxLayout()
         
         # Check Auto-Focus feature
-        # if AF_Function:
-        #     self.AF_Enable_CheckBox = QCheckBox("Auto-Focus (Continuous)")
-        #     self.AF_Enable_CheckBox.setChecked(True)
-        #     self.AF_Enable_CheckBox.setEnabled(True)
-        #     self.AF_Enable_CheckBox.stateChanged.connect(self.AF_Enable_CheckBox_onStateChanged)
-        #     self.childPreviewLayout.addWidget(self.AF_Enable_CheckBox)
-        #     print("show Auto-Focus Mode Change QCheckBox")
-        # else:
-        #     self.AF_Enable_CheckBox = QCheckBox("No Auto-Focus function")
-        #     self.AF_Enable_CheckBox.setChecked(False)
-        #     self.AF_Enable_CheckBox.setEnabled(False)
-        #     print("No Auto-Focus Mode Change QCheckBox")
+        if AF_Function:
+            self.AF_Enable_CheckBox = QCheckBox("Auto-Focus (Continuous)")
+            self.AF_Enable_CheckBox.setChecked(True)
+            self.AF_Enable_CheckBox.setEnabled(True)
+            self.AF_Enable_CheckBox.stateChanged.connect(self.AF_Enable_CheckBox_onStateChanged)
+            self.childPreviewLayout.addWidget(self.AF_Enable_CheckBox)
+            print("show Auto-Focus Mode Change QCheckBox")
+        else:
+            self.AF_Enable_CheckBox = QCheckBox("No Auto-Focus function")
+            self.AF_Enable_CheckBox.setChecked(False)
+            self.AF_Enable_CheckBox.setEnabled(False)
+            print("No Auto-Focus Mode Change QCheckBox")
             
         # Preview qpicamera2
         self.qpicamera2 = QGlPicamera2(picam2,
@@ -292,6 +149,8 @@ class MyMainWidget(QWidget):
         
         self.childPreviewLayout.addWidget(self.qpicamera2)
         
+        # self.childPreviewLayout.addWidget(self.Preview.QTGL)
+
         # Capture button on Child Window
         self.btnChildCapture = QPushButton("Capture Image")
         self.btnChildCapture.setFont(QFont("Helvetica", 13, QFont.Bold))
@@ -385,15 +244,7 @@ class MyMainWidget(QWidget):
         
         picam2.start()
 
-
-def main():
-    model = ArduinoModel()
-    controller = ArduinoController(model)
-    controllerApp = QApplication([])
-    controllerWindow = PyControllerWindow(controller)
-    controllerWindow.show()
-    sys.exit(controllerApp.exec())
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = App()
+    sys.exit(app.exec_())

@@ -1,9 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtCore import Qt
-import sys
-
-"""
-Python 3/PyQt5 + picamera2 to control Raspberry Pi Camera Modules
+"""Python 3/PyQt5 + picamera2 to control Raspberry Pi Camera Modules
 Tested on Raspberry Pi 5/64-bit Raspberry Pi OS (bookworm)
 # in my setup:
 # Picamera2(0) - HQ Camera
@@ -20,6 +15,9 @@ from picamera2 import Picamera2
 from picamera2.previews.qt import QGlPicamera2
 from picamera2 import __name__ as picamera2_name
 from libcamera import controls
+
+import os
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = '/usr/lib/python3/dist-packages/PyQt5'
 
 import time
 from importlib.metadata import version

@@ -14,7 +14,8 @@ picam2.set_controls({"ColourGains": (1.85, 1.85)}) #Tuple of two floating point 
 picam2.start_preview(Preview.QTGL)
 
 picam2.start()
-time.sleep(1000)
+while True:
+	time.sleep(1)
 # picam2.capture("test.jpg")
 
 picam2.close()
