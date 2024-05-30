@@ -11,6 +11,7 @@ picam2 = Picamera2()
 config = picam2.create_preview_configuration(main={"size": (1920, 1080)})
 picam2.configure(config)
 picam2.set_controls({"ColourGains": (1.85, 1.85)}) #Tuple of two floating point numbers between 0.0 and 32.0.
+picam2.set_controls({"AeMeteringMode": controls.AeMeteringModeEnum.CentreWeighted}) # barely makes any difference
 picam2.start_preview(Preview.QTGL)
 
 picam2.start()

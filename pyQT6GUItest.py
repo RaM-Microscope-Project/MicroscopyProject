@@ -21,6 +21,8 @@ DISPLAY_HEIGHT = 35
 BUTTON_SIZE = 40
 ERROR_MSG = "ERROR"
 
+global_color_gain = 1.85
+
 os.environ['DISPLAY'] = ':0'
 
 
@@ -49,7 +51,10 @@ preview_config_raw = picam2.create_preview_configuration(main={"size": (preview_
                                                          raw={"size": picam2.sensor_resolution})
                                                          
 picam2.configure(preview_config_raw)
-picam2.set_controls({"ColourGains": (1.85, 1.85)}) #Tuple of two floating point numbers between 0.0 and 32.0.
+picam2.set_controls({"ColourGains": (global_color_gain, global_color_gain)}) #Tuple of two floating point numbers between 0.0 and 32.0.
+picam2.set_controls({"AeEnable": True})
+# picam2.set_controls({"AwbEnable": True})
+picam2.set_controls({"AeExposureMode": controls.AeExposureModeEnum.Long})
 
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = '/usr/lib/python3/dist-packages/PyQt5'
 # --------------------------------------------------------------------------------------------------
@@ -119,7 +124,15 @@ class ArduinoController:
         self.model.set_servo_position(position)
         print(f"Servo Position : {servo_data}")
         self.send_serial_message(servo_data)
-        time.sleep(0.3)
+        # time.sleep(0.3)
+
+    def handle_second_knob(self, position):
+        knob_data = f"SERVO-{position}\n"
+        self.model.set_servo_position(position)
+        print(f"Knob Position : {knob_data}")
+        # self.send_serial_message(servo_data)
+        # time.sleep(0.3)
+
 
     def send_serial_message(self, message):
         self.serial_connection.write(message.encode())
@@ -186,26 +199,81 @@ class PyControllerWindow(QMainWindow):
         servo_group = QGroupBox("Servo Control")
         servo_layout = QVBoxLayout()
 
-        servo_label = QLabel("Set servo position")
+        servo_label = QLabel("White Balance Adjustment")
         servo_dial = QDial()
         servo_dial.setMinimum(0)
-        servo_dial.setMaximum(180)
+        servo_dial.setMaximum(320)
         servo_dial.setNotchesVisible(True)
         servo_dial.setOrientation(Qt.Orientation.Horizontal)
         servo_dial.valueChanged.connect(self.handle_servo_position_change)
-
+        
         servo_layout.addWidget(servo_label)
         servo_layout.addWidget(servo_dial)
 
         servo_group.setLayout(servo_layout)
         self.layout.addWidget(servo_group)
 
+        # Group Box for Servo-related widgets2
+        servo_group2 = QGroupBox("Servo Control2")
+        servo_layout2 = QVBoxLayout()
+
+        servo_label2 = QLabel("White Balance Adjustment")
+        servo_dial2 = QDial()
+        servo_dial2.setMinimum(0)
+        servo_dial2.setMaximum(600)
+        servo_dial2.setNotchesVisible(True)
+        servo_dial2.setOrientation(Qt.Orientation.Horizontal)
+        servo_dial2.valueChanged.connect(self.handle_second_knob)
+
+        servo_layout2.addWidget(servo_label2)
+        servo_layout2.addWidget(servo_dial2)
+
+        servo_group2.setLayout(servo_layout2)
+        self.layout.addWidget(servo_group2)
+
     def handle_rgb_led_color_change(self, button):
         color = button.text()
         self.controller.handle_rgb_led_color_change(color)
-
+    
     def handle_servo_position_change(self, position):
+        """
+        Adds image filters by changing camera controls.
+
+        This receives the angle of a knob in the GUI, and adjusts filters accordingly.
+        Possible filters include brightness, contrast, saturation, sharpness, and color gain.
+
+        Args:
+            a (int): The first integer to be summed.
+            b (int): The second integer to be summed.
+
+        Returns:
+            int: The sum of the two integers.
+
+        Raises:
+            ValueError: If either a or b is None.
+
+        Examples:
+            >>> calculate_sum(1, 2)
+            3
+            >>> calculate_sum(5, -3)
+            2
+        """
         self.controller.handle_servo_position_change(position)
+        # picam2.set_controls({"ColourGains": (position/100, position/100)})  #between 0 and 32 red and blue
+        # picam2.set_controls({"Saturation": (position/100)})  #between 0 and 32 
+        # picam2.set_controls({"Sharpness": (position/10)})  #between 0 and 16
+        # picam2.set_controls({"Contrast": (position/10)})  #between 0 and 32
+        picam2.set_controls({"Brightness": (position/100 - 1)})  #between -1 and 1
+        # picam2.set_controls({"ColourGains": (position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16)}) #Tuple of nine floating point numbers between -16.0 and 16.0.
+        print("Color Gain set to:", position)
+
+    def handle_second_knob(self, position):
+        self.controller.handle_second_knob(position)
+        # picam2.set_controls({"ExposureValue": (position/10 - 8)})  #between -8 and 8 - does not work for more than 0 =
+        picam2.set_controls({"AnalogueGain": (position/10-8)}) #Floating point number - between -20? and 50+ (50+ when dark). 8 seems to be the default value. # good idea to change 
+        # picam2.set_controls({"ColourGains": (position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16)}) #Tuple of nine floating point numbers between -16.0 and 16.0.
+        print("Value set to:", position/10-8)
+
 
 
 class MyMainWidget(QWidget):
