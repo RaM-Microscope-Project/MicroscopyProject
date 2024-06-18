@@ -97,13 +97,18 @@ class ArduinoController:
 
     def __init__(self, model):
         self.model = model
-        self.serial_connection = serial.Serial('/dev/ttyACM0', 9600)
+        try:
+                self.serial_connection = serial.Serial('/dev/ttyACM0', 9600)
+        except Exception as e:
+                print("Error: ", e)
 
     def handle_led_button_click(self):
         self.model.toggle_led()
         led_data = f"{self.model.get_led_status()}\n"
         print(f"Toggle LED, message : {led_data}")
-        self.send_serial_message(led_data)
+        for i in range(1, 7):
+                led_number = f"{i}\n"
+                self.send_serial_message(led_number)
 
     def handle_rgb_led_color_change(self, color):
         print(f"RGB LED Color : {color}")
@@ -123,7 +128,7 @@ class ArduinoController:
         servo_data = f"SERVO-{position}\n"
         self.model.set_servo_position(position)
         print(f"Servo Position : {servo_data}")
-        self.send_serial_message(servo_data)
+        # self.send_serial_message(servo_data)
         # time.sleep(0.3)
 
     def handle_second_knob(self, position):
@@ -135,7 +140,10 @@ class ArduinoController:
 
 
     def send_serial_message(self, message):
-        self.serial_connection.write(message.encode())
+        try:
+                self.serial_connection.write(message.encode())
+        except Exception as e:
+                print("Error: ", e)
 
 
 class PyControllerWindow(QMainWindow):
@@ -259,11 +267,11 @@ class PyControllerWindow(QMainWindow):
             2
         """
         self.controller.handle_servo_position_change(position)
-        # picam2.set_controls({"ColourGains": (position/100, position/100)})  #between 0 and 32 red and blue
+        picam2.set_controls({"ColourGains": (position/100, position/100)})  #between 0 and 32 red and blue
         # picam2.set_controls({"Saturation": (position/100)})  #between 0 and 32 
         # picam2.set_controls({"Sharpness": (position/10)})  #between 0 and 16
         # picam2.set_controls({"Contrast": (position/10)})  #between 0 and 32
-        picam2.set_controls({"Brightness": (position/100 - 1)})  #between -1 and 1
+        # picam2.set_controls({"Brightness": (position/100 - 1)})  #between -1 and 1
         # picam2.set_controls({"ColourGains": (position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16,position/10 - 16)}) #Tuple of nine floating point numbers between -16.0 and 16.0.
         print("Color Gain set to:", position)
 
