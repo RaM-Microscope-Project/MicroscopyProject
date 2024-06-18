@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import (QPushButton, QVBoxLayout, QWidget)
-
 # Todo: Check QButtonGroup
 
 # ----- Camera imports -------------------------------------------
@@ -9,23 +8,22 @@ from PyQt5.QtGui import QFont
 from picamera2 import Picamera2
 from picamera2.previews.qt import QGlPicamera2
 from libcamera import controls
-picam2 = Picamera2() 
-preview_width = 1000
+# picam2 = Picamera2() 
+# preview_width = 1000
 
-
-# ----- I think this overwrites the previw in the class -----------------------
-preview_height = int(picam2.sensor_resolution[1] * preview_width/picam2.sensor_resolution[0])
-preview_config_raw = picam2.create_preview_configuration(main={"size": (preview_width, preview_height)},
-                                                         raw={"size": picam2.sensor_resolution})
+# # ----- I think this overwrites the previw in the class -----------------------
+# preview_height = int(picam2.sensor_resolution[1] * preview_width/picam2.sensor_resolution[0])
+# preview_config_raw = picam2.create_preview_configuration(main={"size": (preview_width, preview_height)},
+#                                                          raw={"size": picam2.sensor_resolution})
                                                          
-picam2.configure(preview_config_raw) 
+# picam2.configure(preview_config_raw) 
 
-# ---------------------------------
+# # ---------------------------------
 
-picam2.set_controls({"ColourGains": (1.85, 1.85)}) #Tuple of two floating point numbers between 0.0 and 32.0.
-picam2.set_controls({"AeEnable": True})
-# picam2.set_controls({"AwbEnable": True})
-picam2.set_controls({"AeExposureMode": controls.AeExposureModeEnum.Long})
+# picam2.set_controls({"ColourGains": (1.85, 1.85)}) #Tuple of two floating point numbers between 0.0 and 32.0.
+# picam2.set_controls({"AeEnable": True})
+# # picam2.set_controls({"AwbEnable": True})
+# picam2.set_controls({"AeExposureMode": controls.AeExposureModeEnum.Long})
 
 
 class PreviewWindow(QWidget):
@@ -52,27 +50,27 @@ class PreviewWindow(QWidget):
 
     #     self.btnCapture.setEnabled(False)
         
-    #     cfg = picam2.create_still_configuration()
+    #     cfg = camera.create_still_configuration()
         
     #     timeStamp = time.strftime("%Y%m%d-%H%M%S")
     #     targetPath="/home/pi/Desktop/img_"+timeStamp+".jpg"
     #     print("- Capture image:", targetPath)
         
-    #     picam2.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
+    #     camera.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
 
     # def capture_done(self, job):
-    #     result = picam2.wait(job)
+    #     result = camera.wait(job)
     #     self.btnCapture.setEnabled(True)
     #     print("- capture_done.")
     #     print(result)
     
-    def __init__(self, parent):
+    def __init__(self, parent, camera_controls):
         super(QWidget, self).__init__(parent)
         
         #--- Prepare child Preview Window ----------
         self.childPreviewLayout = QVBoxLayout()
-        self.qpicamera2 = QGlPicamera2(picam2,
-                          width=preview_width, height=preview_height,
+        self.qpicamera2 = QGlPicamera2(camera_controls.picam2,
+                          width=camera_controls.preview_width, height=camera_controls.preview_height,
                           keep_ar=True)
         # self.qpicamera2.done_signal.connect(self.capture_done)
         
@@ -89,7 +87,7 @@ class PreviewWindow(QWidget):
         self.myPreviewWindow = self.MyPreviewWidget(self.childPreviewLayout)
 
         # roughly set Preview windows size according to preview_width x preview_height
-        self.myPreviewWindow.setGeometry(10, 10, preview_width+10, preview_height+100)
+        self.myPreviewWindow.setGeometry(10, 10, camera_controls.preview_width+10, camera_controls.preview_height+100)
         self.myPreviewWindow.setWindowTitle("Camera Preview")
         self.myPreviewWindow.show()
-        picam2.start()
+        camera_controls.picam2.start()

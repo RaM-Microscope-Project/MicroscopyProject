@@ -6,6 +6,7 @@ from PyQt5 import QtCore, QtWidgets
 from graphical_user_interface import Ui_MainWindow
 from custom_slider import CustomSlider
 from preview_window import PreviewWindow
+from camera_controls import CameraControls
 
 # ----- Camera imports ---------------------------------------------------------
 
@@ -27,8 +28,8 @@ class CustomMainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
-        self.main_widget = PreviewWindow(self)
+        self.camera_controls = CameraControls()
+        self.main_widget = PreviewWindow(self, self.camera_controls)
 
         # ------- define the sliders -------
         self.whiteSlider = CustomSlider(self.ui.whiteBalanceSlider, 0, 400, self.ui.whiteBalanceValueLabel)
@@ -37,6 +38,7 @@ class CustomMainWindow(QMainWindow):
         self.sharpnessSlider = CustomSlider(self.ui.sharpnessSlider, 0, 100, self.ui.sharpnessValueLabel)
         self.saturationSlider = CustomSlider(self.ui.saturationSlider, 0, 100, self.ui.saturationValueLabel)
         self.brightnessSlider = CustomSlider(self.ui.brightnessSlider, 0, 100, self.ui.brightnessValueLabel)
+        print(self.whiteSlider.slider.value())
 
 
 import resources_rc
