@@ -4,6 +4,7 @@ class CustomSlider:
         self.slider.setMinimum(minimum)
         self.slider.setMaximum(maximum)
         self.label = label
+        self.update_label()
         self.slider.valueChanged.connect(self.update_label)
         self.set_slider_position(position_divisor)
 
