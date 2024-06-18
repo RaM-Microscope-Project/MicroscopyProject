@@ -13,9 +13,17 @@ class CameraControls:
         self.preview_config_raw = self.picam2.create_preview_configuration(main={"size": (self.preview_width, self.preview_height)},
                                                                            raw={"size": self.picam2.sensor_resolution})
         self.picam2.configure(self.preview_config_raw)
-        # self.picam2.set_controls({"ColourGains": (1.85, 1.85)})
         self.picam2.set_controls({"AeEnable": True})
         self.picam2.set_controls({"AeExposureMode": controls.AeExposureModeEnum.Long})
+
+        # ----- nominal value for the settings at the start of the program -----
+
+        self.picam2.set_controls({"ColourGains": (1.6, 2)}) #between 0 and 32 red and blue
+        self.picam2.set_controls({"AnalogueGain": 10}) #Floating point number - between -20? and 50+ (50+ when dark). 8 seems to be the default value.
+        self.picam2.set_controls({"Contrast": (1)})  #between 0 and 32
+        self.picam2.set_controls({"Sharpness": (1)})  #between 0 and 16
+        self.picam2.set_controls({"Saturation": (1)})  #between 0 and 32 
+        self.picam2.set_controls({"Brightness": (0)})  #between -1 and 1
 
 
     def set_control(self, setting, value1, value2=None):

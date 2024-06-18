@@ -32,14 +32,25 @@ class CustomMainWindow(QMainWindow):
         self.main_widget = PreviewWindow(self, self.camera_controls)
 
         # ------- define the sliders -------
-        self.whiteSlider = CustomSlider(self.ui.whiteBalanceSlider, 0, 400, self.ui.whiteBalanceValueLabel)
-        self.analogSlider = CustomSlider(self.ui.analogGainSlider, 0, 100, self.ui.analogGainValueLabel)
-        self.contrastSlider = CustomSlider(self.ui.contrastSlider, 0, 100, self.ui.contrastValueLabel)
-        self.sharpnessSlider = CustomSlider(self.ui.sharpnessSlider, 0, 100, self.ui.sharpnessValueLabel)
-        self.saturationSlider = CustomSlider(self.ui.saturationSlider, 0, 100, self.ui.saturationValueLabel)
-        self.brightnessSlider = CustomSlider(self.ui.brightnessSlider, 0, 100, self.ui.brightnessValueLabel)
-        
-        self.whiteSlider.slider.valueChanged.connect(lambda: self.whiteSlider.update_camera_control(self.camera_controls, "ColourGains", self.whiteSlider.slider.value()/100))
+        self.whiteSlider = CustomSlider(self.ui.whiteBalanceSlider, 0, 320, self.ui.whiteBalanceValueLabel, 2)
+        self.analogSlider = CustomSlider(self.ui.analogGainSlider, -2000, 5000, self.ui.analogGainValueLabel, 3)
+        self.contrastSlider = CustomSlider(self.ui.contrastSlider, 0, 200, self.ui.contrastValueLabel, 2)
+        self.sharpnessSlider = CustomSlider(self.ui.sharpnessSlider, 0, 400, self.ui.sharpnessValueLabel, 4)
+        self.saturationSlider = CustomSlider(self.ui.saturationSlider, 0, 200, self.ui.saturationValueLabel, 2)
+        self.brightnessSlider = CustomSlider(self.ui.brightnessSlider, -50, 50, self.ui.brightnessValueLabel, 2)
+
+        self.whiteSlider.slider.valueChanged.connect(lambda: 
+                self.whiteSlider.update_camera_control_2(self.camera_controls, "ColourGains"))
+        self.analogSlider.slider.valueChanged.connect(lambda: 
+                self.analogSlider.update_camera_control(self.camera_controls, "AnalogueGain"))
+        self.contrastSlider.slider.valueChanged.connect(lambda: 
+                self.contrastSlider.update_camera_control(self.camera_controls, "Contrast"))
+        self.sharpnessSlider.slider.valueChanged.connect(lambda: 
+                self.sharpnessSlider.update_camera_control(self.camera_controls, "Sharpness"))
+        self.saturationSlider.slider.valueChanged.connect(lambda: 
+                self.saturationSlider.update_camera_control(self.camera_controls, "Saturation"))
+        self.brightnessSlider.slider.valueChanged.connect(lambda: 
+                self.brightnessSlider.update_camera_control(self.camera_controls, "Brightness"))
 
 import resources_rc
 

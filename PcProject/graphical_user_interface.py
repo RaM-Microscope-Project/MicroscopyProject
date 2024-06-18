@@ -468,7 +468,7 @@ class Ui_MainWindow(object):
         self.sharpnessValueLabel.setText(_translate("MainWindow", "Value"))
         self.saturationLabel.setText(_translate("MainWindow", "Saturation"))
         self.saturationValueLabel.setText(_translate("MainWindow", "Value"))
-        self.brightnessLabel.setText(_translate("MainWindow", "Brightness"))
+        self.brightnessValueLabel.setText(_translate("MainWindow", "Brightness"))
         self.brightnessValueLabel.setText(_translate("MainWindow", "Value"))
         self.label_4.setText(_translate("MainWindow", "-------RTI----------"))
 import resources_rc
