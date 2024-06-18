@@ -1,34 +1,15 @@
 import os, sys, platform
-
-from PyQt5.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QPushButton,
-    QVBoxLayout,
-    QWidget,
-    QLabel,
-    QDial,
-    QGroupBox,
-    QRadioButton,
-    QButtonGroup,
-    QHBoxLayout
-)
-
 from PyQt5 import QtCore, QtWidgets
 
+
+# ----- Imports of the other classes -------------------------------------------
 from graphical_user_interface import Ui_MainWindow
 from custom_slider import CustomSlider
 from preview_window import PreviewWindow
 
-# ----- Camera imports -------------------------------------------
+# ----- Camera imports ---------------------------------------------------------
 
-import time
-from importlib.metadata import version
-from PyQt5.QtWidgets import (QMainWindow, QApplication, QPushButton, QLabel, QCheckBox,
-                             QWidget, QTabWidget, QVBoxLayout, QGridLayout)
-
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import (QMainWindow, QApplication)
 
 
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = '/usr/lib/python3/dist-packages/PyQt5'
@@ -37,7 +18,8 @@ os.environ['DISPLAY'] = ':0'
 class CustomMainWindow(QMainWindow):
     def __init__(self):
         """
-        Constructor for the custom main window.
+        Constructor for the custom main window and inherits from the
+                                    application design in QT Designer.
         Self.ui is essentially the main window.
         All the elements of the main window are accessible through self.ui.
         Examples: self.ui.whiteBalanceSlider, self.ui.pushButton, etc.
@@ -61,14 +43,6 @@ import resources_rc
 
 if __name__ == "__main__":
     import sys
-
-    # app = QtWidgets.QApplication(sys.argv)
-    # MainWindow = QtWidgets.QMainWindow()
-    # ui = Ui_MainWindow()
-    # ui.setupUi(MainWindow)
-    # MainWindow.show()
-    # sys.exit(app.exec_())
-
     app = QtWidgets.QApplication(sys.argv)
     window = CustomMainWindow()
     window.show()

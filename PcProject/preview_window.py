@@ -1,53 +1,28 @@
-import os, sys, platform
+from PyQt5.QtWidgets import (QPushButton, QVBoxLayout, QWidget)
 
-from PyQt5.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QPushButton,
-    QVBoxLayout,
-    QWidget,
-    QLabel,
-    QDial,
-    QGroupBox,
-    QRadioButton,
-    QButtonGroup,
-    QHBoxLayout
-)
-
-from PyQt5 import QtCore, QtWidgets
-
+# Todo: Check QButtonGroup
 
 # ----- Camera imports -------------------------------------------
 
 import time
-from importlib.metadata import version
-from PyQt5.QtWidgets import (QMainWindow, QApplication, QPushButton, QLabel, QCheckBox,
-                             QWidget, QTabWidget, QVBoxLayout, QGridLayout)
-
-from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
-
-WINDOW_SIZE = 350
-DISPLAY_HEIGHT = 35
-BUTTON_SIZE = 40
-ERROR_MSG = "ERROR"
-
-global_color_gain = 1.85
-
 from picamera2 import Picamera2
 from picamera2.previews.qt import QGlPicamera2
-from picamera2 import __name__ as picamera2_name
 from libcamera import controls
 picam2 = Picamera2() 
+preview_width = 1000
 
 
-preview_width= 1000
+# ----- I think this overwrites the previw in the class -----------------------
 preview_height = int(picam2.sensor_resolution[1] * preview_width/picam2.sensor_resolution[0])
 preview_config_raw = picam2.create_preview_configuration(main={"size": (preview_width, preview_height)},
                                                          raw={"size": picam2.sensor_resolution})
                                                          
-picam2.configure(preview_config_raw)
-picam2.set_controls({"ColourGains": (global_color_gain, global_color_gain)}) #Tuple of two floating point numbers between 0.0 and 32.0.
+picam2.configure(preview_config_raw) 
+
+# ---------------------------------
+
+picam2.set_controls({"ColourGains": (1.85, 1.85)}) #Tuple of two floating point numbers between 0.0 and 32.0.
 picam2.set_controls({"AeEnable": True})
 # picam2.set_controls({"AwbEnable": True})
 picam2.set_controls({"AeExposureMode": controls.AeExposureModeEnum.Long})
@@ -108,7 +83,6 @@ class PreviewWindow(QWidget):
         # self.btnChildCapture = QPushButton("Capture Image")
         # self.btnChildCapture.setFont(QFont("Helvetica", 13, QFont.Bold))
         # self.btnChildCapture.clicked.connect(self.on_Capture_Clicked)
-
         # self.childPreviewLayout.addWidget(self.btnChildCapture)
 
         # pass layout to child Preview Window
