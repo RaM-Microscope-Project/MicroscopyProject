@@ -13,9 +13,16 @@ class CameraControls:
         self.preview_config_raw = self.picam2.create_preview_configuration(main={"size": (self.preview_width, self.preview_height)},
                                                                            raw={"size": self.picam2.sensor_resolution})
         self.picam2.configure(self.preview_config_raw)
-        self.picam2.set_controls({"ColourGains": (1.85, 1.85)})
+        # self.picam2.set_controls({"ColourGains": (1.85, 1.85)})
         self.picam2.set_controls({"AeEnable": True})
         self.picam2.set_controls({"AeExposureMode": controls.AeExposureModeEnum.Long})
+
+
+    def set_control(self, setting, value1, value2=None):
+        if value2 is not None:
+            self.picam2.set_controls({setting: (value1, value2)})
+        else:
+            self.picam2.set_controls({setting: value1})
 
     # def start(self):
     #     self.picam2.start()

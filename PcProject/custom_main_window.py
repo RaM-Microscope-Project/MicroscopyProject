@@ -38,8 +38,8 @@ class CustomMainWindow(QMainWindow):
         self.sharpnessSlider = CustomSlider(self.ui.sharpnessSlider, 0, 100, self.ui.sharpnessValueLabel)
         self.saturationSlider = CustomSlider(self.ui.saturationSlider, 0, 100, self.ui.saturationValueLabel)
         self.brightnessSlider = CustomSlider(self.ui.brightnessSlider, 0, 100, self.ui.brightnessValueLabel)
-        print(self.whiteSlider.slider.value())
-
+        
+        self.whiteSlider.slider.valueChanged.connect(lambda: self.whiteSlider.update_camera_control(self.camera_controls, "ColourGains", self.whiteSlider.slider.value()/100))
 
 import resources_rc
 

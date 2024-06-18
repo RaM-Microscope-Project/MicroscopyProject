@@ -15,5 +15,8 @@ class CustomSlider:
     def update_label(self):
         self.label.setText(str(self.slider.value()/100))
 
+    def update_camera_control(self, camera, setting, value):
+        camera.set_control(setting, value, value)
+
     def print_slider_value(self):
         print(self.slider.value()/100)
