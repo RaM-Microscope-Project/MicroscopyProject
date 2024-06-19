@@ -60,16 +60,22 @@ class CustomMainWindow(QMainWindow):
 
 
         # ------- define the buttons -------
-        self.rightArrowButton = CustomButtonController(self.ui.rightArrow, "Right")
-        self.leftArrowButton = CustomButtonController(self.ui.leftArrow, "Left")
-        self.upArrowButton = CustomButtonController(self.ui.upArrow, "Up")
-        self.downArrowButton = CustomButtonController(self.ui.downArrow, "Down")
-
+        
+        self.upArrowButton = CustomButtonController(self.ui.upArrow, "1")
+        self.leftArrowButton = CustomButtonController(self.ui.leftArrow, "2")
+        self.downArrowButton = CustomButtonController(self.ui.downArrow, "3")
+        self.rightArrowButton = CustomButtonController(self.ui.rightArrow, "D")
+        
 
         # ------- test the arduino controller -------
 
         self.arduino = ArduinoController()
-        self.arduino.handle_led_button_click()
+        # self.arduino.handle_led()
+
+        self.upArrowButton.button.clicked.connect(lambda: self.arduino.move_stage("w"))
+        self.leftArrowButton.button.clicked.connect(lambda: self.arduino.move_stage("a"))
+        self.downArrowButton.button.clicked.connect(lambda: self.arduino.move_stage("s"))
+        self.rightArrowButton.button.clicked.connect(lambda: self.arduino.move_stage("d"))
 
 import resources_rc
 
