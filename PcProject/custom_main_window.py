@@ -7,6 +7,7 @@ from graphical_user_interface import Ui_MainWindow
 from custom_slider import CustomSlider
 from preview_window import PreviewWindow
 from camera_controls import CameraControls
+from arduino_controller import ArduinoController
 
 # ----- Camera imports ---------------------------------------------------------
 
@@ -31,6 +32,8 @@ class CustomMainWindow(QMainWindow):
         self.camera_controls = CameraControls()
         self.main_widget = PreviewWindow(self, self.camera_controls)
 
+
+
         # ------- define the sliders -------
         self.whiteSlider = CustomSlider(self.ui.whiteBalanceSlider, 0, 320, self.ui.whiteBalanceValueLabel, 2)
         self.analogSlider = CustomSlider(self.ui.analogGainSlider, -2000, 5000, self.ui.analogGainValueLabel, 3)
@@ -39,6 +42,8 @@ class CustomMainWindow(QMainWindow):
         self.saturationSlider = CustomSlider(self.ui.saturationSlider, 0, 200, self.ui.saturationValueLabel, 2)
         self.brightnessSlider = CustomSlider(self.ui.brightnessSlider, -50, 50, self.ui.brightnessValueLabel, 2)
 
+
+        # Todo:define method for this
         self.whiteSlider.slider.valueChanged.connect(lambda: 
                 self.whiteSlider.update_camera_control_2(self.camera_controls, "ColourGains"))
         self.analogSlider.slider.valueChanged.connect(lambda: 
@@ -51,6 +56,9 @@ class CustomMainWindow(QMainWindow):
                 self.saturationSlider.update_camera_control(self.camera_controls, "Saturation"))
         self.brightnessSlider.slider.valueChanged.connect(lambda: 
                 self.brightnessSlider.update_camera_control(self.camera_controls, "Brightness"))
+
+        self.arduino = ArduinoController()
+        self.arduino.handle_led_button_click()
 
 import resources_rc
 
