@@ -8,6 +8,7 @@ from custom_slider import CustomSlider
 from preview_window import PreviewWindow
 from camera_controls import CameraControls
 from arduino_controller import ArduinoController
+from custom_button_controller import CustomButtonController
 
 # ----- Camera imports ---------------------------------------------------------
 
@@ -56,6 +57,16 @@ class CustomMainWindow(QMainWindow):
                 self.saturationSlider.update_camera_control(self.camera_controls, "Saturation"))
         self.brightnessSlider.slider.valueChanged.connect(lambda: 
                 self.brightnessSlider.update_camera_control(self.camera_controls, "Brightness"))
+
+
+        # ------- define the buttons -------
+        self.rightArrowButton = CustomButtonController(self.ui.rightArrow, "Right")
+        self.leftArrowButton = CustomButtonController(self.ui.leftArrow, "Left")
+        self.upArrowButton = CustomButtonController(self.ui.upArrow, "Up")
+        self.downArrowButton = CustomButtonController(self.ui.downArrow, "Down")
+
+
+        # ------- test the arduino controller -------
 
         self.arduino = ArduinoController()
         self.arduino.handle_led_button_click()
