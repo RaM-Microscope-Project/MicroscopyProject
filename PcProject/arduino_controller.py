@@ -15,8 +15,8 @@ class ArduinoController:
         for led_number in range(1, 4): 
             message = f"{led_number}"
             self.send_serial_message(message)
-        else:
-            print("Invalid LED number. Please enter a value between 1 and 3.")
+        #else:
+         #   print("Invalid LED number. Please enter a value between 1 and 3.")
 
     def move_stage(self, command):
         # command = buttonController.command
@@ -24,9 +24,17 @@ class ArduinoController:
 
     def send_serial_message(self, message):
         """Send a serial message to the Arduino."""
+        separated_message = message + "\n"
         try:
-            self.serial_connection.write(message.encode())
-            print(f"Sent: {message.encode()}")
+            self.serial_connection.write(separated_message.encode())
+            print(f"Sent: {separated_message.encode()}")
         except Exception as e:
             print("Error: ", e)
+    
+    def close_connection(serial):
+        try:
+            self.serial_connction.close()
+        except Exception as e:
+            print("Error: ", e)
+    
 

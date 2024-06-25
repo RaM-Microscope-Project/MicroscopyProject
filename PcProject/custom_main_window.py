@@ -61,21 +61,21 @@ class CustomMainWindow(QMainWindow):
 
         # ------- define the buttons -------
         
-        self.upArrowButton = CustomButtonController(self.ui.upArrow, "1")
-        self.leftArrowButton = CustomButtonController(self.ui.leftArrow, "2")
-        self.downArrowButton = CustomButtonController(self.ui.downArrow, "3")
-        self.rightArrowButton = CustomButtonController(self.ui.rightArrow, "D")
+        #self.upArrowButton = CustomButtonController(self.ui.upArrow, "1")
+        #self.leftArrowButton = CustomButtonController(self.ui.leftArrow, "2")
+        #self.downArrowButton = CustomButtonController(self.ui.downArrow, "3")
+        #self.rightArrowButton = CustomButtonController(self.ui.rightArrow, "D")
         
 
         # ------- test the arduino controller -------
 
         self.arduino = ArduinoController()
-        # self.arduino.handle_led()
+        self.arduino.handle_led()
 
-        self.upArrowButton.button.clicked.connect(lambda: self.arduino.move_stage("w"))
-        self.leftArrowButton.button.clicked.connect(lambda: self.arduino.move_stage("a"))
-        self.downArrowButton.button.clicked.connect(lambda: self.arduino.move_stage("s"))
-        self.rightArrowButton.button.clicked.connect(lambda: self.arduino.move_stage("d"))
+        self.ui.upArrow.clicked.connect(lambda: self.arduino.move_stage("w"))
+        self.ui.leftArrow.clicked.connect(lambda: self.arduino.move_stage("a"))
+        self.ui.downArrow.clicked.connect(lambda: self.arduino.move_stage("s"))
+        self.ui.rightArrow.clicked.connect(lambda: self.arduino.move_stage("d"))
 
 import resources_rc
 
@@ -84,4 +84,8 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = CustomMainWindow()
     window.show()
+    window.arduino.close_connection()
     sys.exit(app.exec_())
+    
+    
+    
