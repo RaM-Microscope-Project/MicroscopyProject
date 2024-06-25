@@ -77,7 +77,7 @@ class CustomMainWindow(QMainWindow):
         self.ui.leftArrow.clicked.connect(lambda: self.arduino.move_stage("d"))
         self.ui.downArrow.clicked.connect(lambda: self.arduino.move_stage("w"))
         self.ui.rightArrow.clicked.connect(lambda: self.arduino.move_stage("a"))
-
+        self.ui.stage_stop_button.clicked.connect(lambda: self.arduino.move_stage("q"))
 
         
 
@@ -114,6 +114,8 @@ class CustomMainWindow(QMainWindow):
         self.ui.led_button_22.clicked.connect(lambda: self.arduino.send_serial_message("22"))
         self.ui.led_button_23.clicked.connect(lambda: self.arduino.send_serial_message("23"))
         self.ui.led_button_24.clicked.connect(lambda: self.arduino.send_serial_message("24"))
+
+        self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.send_serial_message("m"))
 
 
         

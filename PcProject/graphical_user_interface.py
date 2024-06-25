@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(990, 876)
+        MainWindow.resize(1442, 876)
         MainWindow.setStyleSheet("*{\n"
 "    border:none;\n"
 "    background-color:transparent;\n"
@@ -62,6 +62,9 @@ class Ui_MainWindow(object):
 "    background-color: yellow;\n"
 "}\n"
 "\n"
+"#led_button1:clicked{\n"
+"    background-color: yellow;\n"
+"}\n"
 "")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -182,6 +185,18 @@ class Ui_MainWindow(object):
         self.leftArrow.setIconSize(QtCore.QSize(48, 48))
         self.leftArrow.setObjectName("leftArrow")
         self.horizontalLayout_9.addWidget(self.leftArrow, 0, QtCore.Qt.AlignLeft)
+        self.stage_stop_button = QtWidgets.QPushButton(self.frame_10)
+        self.stage_stop_button.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.stage_stop_button.setFont(font)
+        self.stage_stop_button.setStyleSheet("border: 3px solid #ffffff;  /* Border color */\n"
+"background-color: transparent;\n"
+"padding: 8px;")
+        self.stage_stop_button.setObjectName("stage_stop_button")
+        self.horizontalLayout_9.addWidget(self.stage_stop_button)
         self.rightArrow = QtWidgets.QPushButton(self.frame_10)
         self.rightArrow.setText("")
         icon2 = QtGui.QIcon()
@@ -607,6 +622,15 @@ class Ui_MainWindow(object):
         self.led_button_5.setStyleSheet("")
         self.led_button_5.setText("")
         self.led_button_5.setObjectName("led_button_5")
+        self.rti_reset_button = QtWidgets.QPushButton(self.rtiFrame)
+        self.rti_reset_button.setGeometry(QtCore.QRect(200, 500, 100, 60))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        self.rti_reset_button.setFont(font)
+        self.rti_reset_button.setStyleSheet("border: 3px solid #ffffff;  /* Border color */\n"
+"background-color: transparent;\n"
+"padding: 8px;")
+        self.rti_reset_button.setObjectName("rti_reset_button")
         self.verticalLayout_7.addWidget(self.rtiFrame)
         self.horizontalLayout_8.addWidget(self.rtiControlContainer)
         self.verticalLayout_11.addWidget(self.controlsContainer)
@@ -621,6 +645,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label_6.setText(_translate("MainWindow", "xXPePXx"))
         self.label_2.setText(_translate("MainWindow", "Stage Control"))
+        self.stage_stop_button.setText(_translate("MainWindow", "Stop"))
         self.cameraButton.setToolTip(_translate("MainWindow", "Camera"))
         self.cameraLabel.setText(_translate("MainWindow", "Camera"))
         self.label_3.setText(_translate("MainWindow", "Camera Settings"))
@@ -637,6 +662,7 @@ class Ui_MainWindow(object):
         self.brightnessLabel.setText(_translate("MainWindow", "Brightness"))
         self.brightnessValueLabel.setText(_translate("MainWindow", "Value"))
         self.label_4.setText(_translate("MainWindow", "-------RTI----------"))
+        self.rti_reset_button.setText(_translate("MainWindow", "Reset"))
 import resources_rc
 
 
