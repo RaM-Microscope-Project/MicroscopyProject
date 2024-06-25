@@ -78,30 +78,30 @@ void loop() {
     else if (inputString == "d") {
       Serial.println("Key D pressed. Moving motors...");
       // Move stepper1 clockwise and stepper2 counterclockwise
-      toggleMotor(stepper1, 500);
-      toggleMotor(stepper2, -500);
+      stepper1.setSpeed(500);
+      stepper2.setSpeed(-500);
       stepper3.setSpeed(0);
     }
     else if (inputString == "a") {
       Serial.println("Key A pressed. Moving motors...");
       // Move stepper1 counterclockwise and stepper2 clockwise
-      toggleMotor(stepper1, -500);
-      toggleMotor(stepper2, 500);
+      stepper1.setSpeed(-500);
+      stepper2.setSpeed(500);
       stepper3.setSpeed(0);
     }
     else if (inputString == "s") {
       Serial.println("Key S pressed. Moving motors...");
       // Move stepper1 and stepper2 clockwise, stepper3 counterclockwise
-      toggleMotor(stepper1, 500);
-      toggleMotor(stepper2, 500);
-      toggleMotor(stepper3, -500);
+      stepper1.setSpeed(500);
+      stepper2.setSpeed(500);
+      stepper3.setSpeed(-500);
     }
     else if (inputString == "w") {
       Serial.println("Key W pressed. Moving motors...");
       // Move stepper1 and stepper2 counterclockwise, stepper3 clockwise
-      toggleMotor(stepper1, -500);
-      toggleMotor(stepper2, -500);
-      toggleMotor(stepper3, 500);
+      stepper1.setSpeed(-500);
+      stepper2.setSpeed(-500);
+      stepper3.setSpeed(500);
     }
     else if (inputString == "q") {
       Serial.println("Q for Quit. Stopping all motors...");
