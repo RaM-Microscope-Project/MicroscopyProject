@@ -70,12 +70,43 @@ class CustomMainWindow(QMainWindow):
         # ------- test the arduino controller -------
 
         self.arduino = ArduinoController()
-        self.arduino.handle_led()
+        # self.arduino.handle_led()
 
         self.ui.upArrow.clicked.connect(lambda: self.arduino.move_stage("w"))
         self.ui.leftArrow.clicked.connect(lambda: self.arduino.move_stage("a"))
         self.ui.downArrow.clicked.connect(lambda: self.arduino.move_stage("s"))
         self.ui.rightArrow.clicked.connect(lambda: self.arduino.move_stage("d"))
+
+
+        #  Todo: define method or a for loop for this
+        self.ui.led_button_1.clicked.connect(lambda: self.arduino.send_serial_message("1"))
+        self.ui.led_button_2.clicked.connect(lambda: self.arduino.send_serial_message("2"))
+        self.ui.led_button_3.clicked.connect(lambda: self.arduino.send_serial_message("3"))
+        self.ui.led_button_4.clicked.connect(lambda: self.arduino.send_serial_message("4"))
+        self.ui.led_button_5.clicked.connect(lambda: self.arduino.send_serial_message("5"))
+        self.ui.led_button_6.clicked.connect(lambda: self.arduino.send_serial_message("6"))
+        self.ui.led_button_7.clicked.connect(lambda: self.arduino.send_serial_message("7"))
+        self.ui.led_button_8.clicked.connect(lambda: self.arduino.send_serial_message("8"))
+        self.ui.led_button_9.clicked.connect(lambda: self.arduino.send_serial_message("9"))
+        self.ui.led_button_10.clicked.connect(lambda: self.arduino.send_serial_message("10"))
+        self.ui.led_button_11.clicked.connect(lambda: self.arduino.send_serial_message("11"))
+        self.ui.led_button_12.clicked.connect(lambda: self.arduino.send_serial_message("12"))
+        self.ui.led_button_13.clicked.connect(lambda: self.arduino.send_serial_message("13"))
+        self.ui.led_button_14.clicked.connect(lambda: self.arduino.send_serial_message("14"))
+        self.ui.led_button_15.clicked.connect(lambda: self.arduino.send_serial_message("15"))
+        self.ui.led_button_16.clicked.connect(lambda: self.arduino.send_serial_message("16"))
+        self.ui.led_button_17.clicked.connect(lambda: self.arduino.send_serial_message("17"))
+        self.ui.led_button_18.clicked.connect(lambda: self.arduino.send_serial_message("18"))
+        self.ui.led_button_19.clicked.connect(lambda: self.arduino.send_serial_message("19"))
+        self.ui.led_button_20.clicked.connect(lambda: self.arduino.send_serial_message("20"))
+        self.ui.led_button_21.clicked.connect(lambda: self.arduino.send_serial_message("21"))
+        self.ui.led_button_22.clicked.connect(lambda: self.arduino.send_serial_message("22"))
+        self.ui.led_button_23.clicked.connect(lambda: self.arduino.send_serial_message("23"))
+        self.ui.led_button_24.clicked.connect(lambda: self.arduino.send_serial_message("24"))
+
+
+        
+        
 
 import resources_rc
 
@@ -84,7 +115,6 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = CustomMainWindow()
     window.show()
-    window.arduino.close_connection()
     sys.exit(app.exec_())
     
     
