@@ -8,6 +8,12 @@ from PyQt5.QtGui import QFont
 from picamera2 import Picamera2
 from picamera2.previews.qt import QGlPicamera2
 from libcamera import controls
+# import os
+# timeStamp = time.strftime("%Y%m%d-%H%M%S")
+# targetPath = "/home/xxpepxx/Desktop/GitProject/MicroscopyProject/captures/rti_img_" + timeStamp + ".jpg"
+
+# Ensure the directory exists
+# os.makedirs(os.path.dirname(targetPath), exist_ok=True)
 # picam2 = Picamera2() 
 # preview_width = 1000
 
@@ -39,49 +45,49 @@ class PreviewWindow(QWidget):
     #--- End of MyPreviewWidget ---
         
 
-    # def on_Capture_Clicked(self):
-    #     # There are two buttons on Main/Child Window connected here,
-    #     # identify the sender for info only, no actual use.
-    #     sender = self.sender()
-    #     if sender is self.btnCapture:
-    #         print("Capture button on Main Window clicked")
-    #     if sender is self.btnChildCapture:
-    #         print("Capture button on Child Preview Window clicked")
+    def on_Capture_Clicked(self):
+        # There are two buttons on Main/Child Window connected here,
+        # identify the sender for info only, no actual use.
+        sender = self.sender()
+        # if sender is self.btnCapture:
+        #     print("Capture button on Main Window clicked")
+        if sender is self.btnChildCapture:
+            print("Capture button on Child Preview Window clicked")
 
-    #     self.btnCapture.setEnabled(False)
+        self.btnChildCapture.setEnabled(False)
         
-    #     cfg = camera.create_still_configuration()
+        cfg = self.camera_controls.picam2.create_still_configuration()
         
-    #     timeStamp = time.strftime("%Y%m%d-%H%M%S")
-    #     targetPath="/home/pi/Desktop/img_"+timeStamp+".jpg"
-    #     print("- Capture image:", targetPath)
+        timeStamp = time.strftime("%Y%m%d-%H%M%S")
+        targetPath="/home/xxpepxx/Desktop/GitProject/MicroscopyProject/PcProject/captures/rti_img_"+timeStamp+".jpg"
+        print("- Capture image:", targetPath)
         
-    #     camera.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
+        self.camera_controls.picam2.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
 
-    # def capture_done(self, job):
-    #     result = camera.wait(job)
-    #     self.btnCapture.setEnabled(True)
-    #     print("- capture_done.")
-    #     print(result)
+    def capture_done(self, job):
+        result = self.camera_controls.picam2.wait(job)
+        self.btnChildCapture.setEnabled(True)
+        print("- capture_done.")
+        print(result)
     
     def __init__(self, parent, camera_controls):
         super(QWidget, self).__init__(parent)
-        
+        self.camera_controls = camera_controls
         #--- Prepare child Preview Window ----------
         self.childPreviewLayout = QVBoxLayout()
         self.qpicamera2 = QGlPicamera2(camera_controls.picam2,
                           width=camera_controls.preview_width, height=camera_controls.preview_height,
                           keep_ar=True)
-        # self.qpicamera2.done_signal.connect(self.capture_done)
+        self.qpicamera2.done_signal.connect(self.capture_done)
         
         self.childPreviewLayout.addWidget(self.qpicamera2)
         
         # # Capture button on Child Window
 
-        # self.btnChildCapture = QPushButton("Capture Image")
-        # self.btnChildCapture.setFont(QFont("Helvetica", 13, QFont.Bold))
-        # self.btnChildCapture.clicked.connect(self.on_Capture_Clicked)
-        # self.childPreviewLayout.addWidget(self.btnChildCapture)
+        self.btnChildCapture = QPushButton("Capture Image")
+        self.btnChildCapture.setFont(QFont("Helvetica", 13, QFont.Bold))
+        self.btnChildCapture.clicked.connect(self.on_Capture_Clicked)
+        self.childPreviewLayout.addWidget(self.btnChildCapture)
 
         # pass layout to child Preview Window
         self.myPreviewWindow = self.MyPreviewWidget(self.childPreviewLayout)

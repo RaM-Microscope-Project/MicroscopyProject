@@ -32,14 +32,5 @@ class CameraControls:
         else:
             self.picam2.set_controls({setting: value1})
 
-    # def start(self):
-    #     self.picam2.start()
-
-    # def create_still_configuration(self):
-    #     return self.picam2.create_still_configuration()
-
-    # def switch_mode_and_capture_file(self, cfg, target_path, signal_function=None):
-    #     self.picam2.switch_mode_and_capture_file(cfg, target_path, signal_function)
-
-    # def wait(self, job):
-    #     return self.picam2.wait(job)
+    def capture_image(self):
+        self.picam2.capture_image("captures/rtiImage.jpg")

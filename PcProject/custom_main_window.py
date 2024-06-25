@@ -9,6 +9,7 @@ from preview_window import PreviewWindow
 from camera_controls import CameraControls
 from arduino_controller import ArduinoController
 from custom_button_controller import CustomButtonController
+from led_button_controller import LedButtonController
 
 # ----- Camera imports ---------------------------------------------------------
 
@@ -72,13 +73,23 @@ class CustomMainWindow(QMainWindow):
         self.arduino = ArduinoController()
         # self.arduino.handle_led()
 
-        self.ui.upArrow.clicked.connect(lambda: self.arduino.move_stage("w"))
-        self.ui.leftArrow.clicked.connect(lambda: self.arduino.move_stage("a"))
-        self.ui.downArrow.clicked.connect(lambda: self.arduino.move_stage("s"))
-        self.ui.rightArrow.clicked.connect(lambda: self.arduino.move_stage("d"))
+        self.ui.upArrow.clicked.connect(lambda: self.arduino.move_stage("s"))
+        self.ui.leftArrow.clicked.connect(lambda: self.arduino.move_stage("d"))
+        self.ui.downArrow.clicked.connect(lambda: self.arduino.move_stage("w"))
+        self.ui.rightArrow.clicked.connect(lambda: self.arduino.move_stage("a"))
 
+
+        
 
         #  Todo: define method or a for loop for this
+        self.let_button_controllers = []
+        for i in range(1, 25):
+            button = getattr(self.ui, f"led_button_{i}")
+            self.let_button_controllers.append(LedButtonController(button))
+        #     button.clicked.connect(lambda: self.arduino.send_serial_message(str(i)))
+
+
+
         self.ui.led_button_1.clicked.connect(lambda: self.arduino.send_serial_message("1"))
         self.ui.led_button_2.clicked.connect(lambda: self.arduino.send_serial_message("2"))
         self.ui.led_button_3.clicked.connect(lambda: self.arduino.send_serial_message("3"))
