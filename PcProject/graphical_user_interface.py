@@ -643,7 +643,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_6.setText(_translate("MainWindow", "xXPePXx"))
+        self.label_6.setText(_translate("MainWindow", "Microscope Control"))
         self.label_2.setText(_translate("MainWindow", "Stage Control"))
         self.stage_stop_button.setText(_translate("MainWindow", "Stop"))
         self.cameraButton.setToolTip(_translate("MainWindow", "Camera"))
