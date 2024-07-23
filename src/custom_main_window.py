@@ -22,8 +22,7 @@ os.environ['DISPLAY'] = ':0'
 class CustomMainWindow(QMainWindow):
     def __init__(self):
         """
-        Constructor for the custom main window and inherits from the
-                                    application design in QT Designer.
+        Constructor for the custom main window.
         Self.ui is essentially the main window.
         All the elements of the main window are accessible through self.ui.
         Examples: self.ui.whiteBalanceSlider, self.ui.pushButton, etc.
@@ -31,33 +30,21 @@ class CustomMainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+     
         self.camera_controls = CameraControls()
         self.main_widget = PreviewWindow(self, self.camera_controls)
 
 
 
         # ------- define the sliders -------
-        self.whiteSlider = CustomSlider(self.ui.whiteBalanceSlider, 0, 320, self.ui.whiteBalanceValueLabel, 2)
-        self.analogSlider = CustomSlider(self.ui.analogGainSlider, -2000, 5000, self.ui.analogGainValueLabel, 3)
-        self.contrastSlider = CustomSlider(self.ui.contrastSlider, 0, 200, self.ui.contrastValueLabel, 2)
-        self.sharpnessSlider = CustomSlider(self.ui.sharpnessSlider, 0, 400, self.ui.sharpnessValueLabel, 4)
-        self.saturationSlider = CustomSlider(self.ui.saturationSlider, 0, 200, self.ui.saturationValueLabel, 2)
-        self.brightnessSlider = CustomSlider(self.ui.brightnessSlider, -50, 50, self.ui.brightnessValueLabel, 2)
-
-
-        # Todo:define method for this
-        self.whiteSlider.slider.valueChanged.connect(lambda: 
-                self.whiteSlider.update_camera_control_2(self.camera_controls, "ColourGains"))
-        self.analogSlider.slider.valueChanged.connect(lambda: 
-                self.analogSlider.update_camera_control(self.camera_controls, "AnalogueGain"))
-        self.contrastSlider.slider.valueChanged.connect(lambda: 
-                self.contrastSlider.update_camera_control(self.camera_controls, "Contrast"))
-        self.sharpnessSlider.slider.valueChanged.connect(lambda: 
-                self.sharpnessSlider.update_camera_control(self.camera_controls, "Sharpness"))
-        self.saturationSlider.slider.valueChanged.connect(lambda: 
-                self.saturationSlider.update_camera_control(self.camera_controls, "Saturation"))
-        self.brightnessSlider.slider.valueChanged.connect(lambda: 
-                self.brightnessSlider.update_camera_control(self.camera_controls, "Brightness"))
+        self.whiteSlider = CustomSlider(self.ui.whiteBalanceSlider, "ColourGains", self.ui.whiteBalanceValueLabel, self.camera_controls)
+        self.set_sliders()
+        # self.analogSlider = CustomSlider(self.ui.analogGainSlider, -2000, 5000, self.ui.analogGainValueLabel, 3)
+        # self.contrastSlider = CustomSlider(self.ui.contrastSlider, 0, 200, self.ui.contrastValueLabel, 2)
+        # self.sharpnessSlider = CustomSlider(self.ui.sharpnessSlider, 0, 400, self.ui.sharpnessValueLabel, 4)
+        # self.saturationSlider = CustomSlider(self.ui.saturationSlider, 0, 200, self.ui.saturationValueLabel, 2)
+        # self.brightnessSlider = CustomSlider(self.ui.brightnessSlider, -50, 50, self.ui.brightnessValueLabel, 2)
 
 
         # ------- define the buttons -------
@@ -79,43 +66,19 @@ class CustomMainWindow(QMainWindow):
         self.ui.rightArrow.clicked.connect(lambda: self.arduino.move_stage("a"))
         self.ui.stage_stop_button.clicked.connect(lambda: self.arduino.move_stage("q"))
 
-        
 
-        #  Todo: define method or a for loop for this
-        self.let_button_controllers = []
+        led_button_controller = CustomButtonController(self.arduino)
+
         for i in range(1, 25):
-            button = getattr(self.ui, f"led_button_{i}")
-            self.let_button_controllers.append(LedButtonController(button))
-        #     button.clicked.connect(lambda: self.arduino.send_serial_message(str(i)))
+                button = getattr(self.ui, f'led_button_{i}') # dynamically get the button by name
+                led_button_controller.connect_button_with_message(button, str(i))
 
-
-
-        self.ui.led_button_1.clicked.connect(lambda: self.arduino.send_serial_message("1"))
-        self.ui.led_button_2.clicked.connect(lambda: self.arduino.send_serial_message("2"))
-        self.ui.led_button_3.clicked.connect(lambda: self.arduino.send_serial_message("3"))
-        self.ui.led_button_4.clicked.connect(lambda: self.arduino.send_serial_message("4"))
-        self.ui.led_button_5.clicked.connect(lambda: self.arduino.send_serial_message("5"))
-        self.ui.led_button_6.clicked.connect(lambda: self.arduino.send_serial_message("6"))
-        self.ui.led_button_7.clicked.connect(lambda: self.arduino.send_serial_message("7"))
-        self.ui.led_button_8.clicked.connect(lambda: self.arduino.send_serial_message("8"))
-        self.ui.led_button_9.clicked.connect(lambda: self.arduino.send_serial_message("9"))
-        self.ui.led_button_10.clicked.connect(lambda: self.arduino.send_serial_message("10"))
-        self.ui.led_button_11.clicked.connect(lambda: self.arduino.send_serial_message("11"))
-        self.ui.led_button_12.clicked.connect(lambda: self.arduino.send_serial_message("12"))
-        self.ui.led_button_13.clicked.connect(lambda: self.arduino.send_serial_message("13"))
-        self.ui.led_button_14.clicked.connect(lambda: self.arduino.send_serial_message("14"))
-        self.ui.led_button_15.clicked.connect(lambda: self.arduino.send_serial_message("15"))
-        self.ui.led_button_16.clicked.connect(lambda: self.arduino.send_serial_message("16"))
-        self.ui.led_button_17.clicked.connect(lambda: self.arduino.send_serial_message("17"))
-        self.ui.led_button_18.clicked.connect(lambda: self.arduino.send_serial_message("18"))
-        self.ui.led_button_19.clicked.connect(lambda: self.arduino.send_serial_message("19"))
-        self.ui.led_button_20.clicked.connect(lambda: self.arduino.send_serial_message("20"))
-        self.ui.led_button_21.clicked.connect(lambda: self.arduino.send_serial_message("21"))
-        self.ui.led_button_22.clicked.connect(lambda: self.arduino.send_serial_message("22"))
-        self.ui.led_button_23.clicked.connect(lambda: self.arduino.send_serial_message("23"))
-        self.ui.led_button_24.clicked.connect(lambda: self.arduino.send_serial_message("24"))
 
         self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.send_serial_message("m"))
+
+
+    def set_sliders(self):
+         self.whiteSlider.set_slider_properties(0, 320, 160)
 
 
         

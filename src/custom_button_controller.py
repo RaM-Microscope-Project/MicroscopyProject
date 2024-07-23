@@ -1,11 +1,12 @@
 class CustomButtonController:
-    def __init__(self, button, command):
-        self.button = button
-        self.command = command
-        self.button.clicked.connect(self.print_command)
+    def __init__(self, arduino):
+        self.arduino = arduino
 
-    def print_command(self):
-        print(self.command)
+    def connect_button_with_message(self, button, message):
+        button.clicked.connect(lambda: self.arduino.send_serial_message(message))
+
+
         
+
 
     

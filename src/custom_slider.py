@@ -1,17 +1,12 @@
 class CustomSlider:
-    def __init__(self, slider, minimum, maximum, label, position_divisor):
+    def __init__(self, slider, setting, label, camera_controls):
         self.slider = slider
-        self.slider.setMinimum(minimum)
-        self.slider.setMaximum(maximum)
+        self.camera_controls = camera_controls
         self.label = label
         self.update_label()
         self.slider.valueChanged.connect(self.update_label)
-        self.set_slider_position(position_divisor)
-
-
-    def set_slider_position(self, position_divisor):
-        middle_value = (self.slider.minimum() + self.slider.maximum()) // position_divisor
-        self.slider.setValue(middle_value)
+        self.connect_slider_camera(setting)
+        
 
     def update_label(self):
         self.label.setText(str(self.slider.value()/100))
@@ -24,3 +19,11 @@ class CustomSlider:
 
     def print_slider_value(self):
         print(self.slider.value()/100)
+
+    def connect_slider_camera(self, setting):
+        self.slider.valueChanged.connect(lambda: self.update_camera_control_2(self.camera_controls, "ColourGains"))
+
+    def set_slider_properties(self, minimum_value, maximum_value, initial_position):
+        self.slider.setMinimum(minimum_value)
+        self.slider.setMaximum(maximum_value)
+        self.slider.setValue(initial_position)
