@@ -59,7 +59,7 @@ class PreviewWindow(QWidget):
         cfg = self.camera_controls.picam2.create_still_configuration()
         
         timeStamp = time.strftime("%Y%m%d-%H%M%S")
-        targetPath="/home/xxpepxx/Desktop/GitProject/MicroscopyProject/PcProject/captures/rti_img_"+timeStamp+".jpg"
+        targetPath="/home/xxpepxx/Desktop/GitProject/MicroscopyProject/src/captures/rti_img_"+timeStamp+".jpg"
         print("- Capture image:", targetPath)
         
         self.camera_controls.picam2.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
