@@ -38,22 +38,14 @@ class CustomMainWindow(QMainWindow):
 
 
         # ------- define the sliders -------
-        self.whiteSlider = CustomSlider(self.ui.whiteBalanceSlider, "ColourGains", self.ui.whiteBalanceValueLabel, self.camera_controls)
-        self.set_sliders()
-        # self.analogSlider = CustomSlider(self.ui.analogGainSlider, -2000, 5000, self.ui.analogGainValueLabel, 3)
-        # self.contrastSlider = CustomSlider(self.ui.contrastSlider, 0, 200, self.ui.contrastValueLabel, 2)
-        # self.sharpnessSlider = CustomSlider(self.ui.sharpnessSlider, 0, 400, self.ui.sharpnessValueLabel, 4)
-        # self.saturationSlider = CustomSlider(self.ui.saturationSlider, 0, 200, self.ui.saturationValueLabel, 2)
-        # self.brightnessSlider = CustomSlider(self.ui.brightnessSlider, -50, 50, self.ui.brightnessValueLabel, 2)
+        self.white_slider = CustomSlider(self.ui.whiteBalanceSlider, "ColourGains", self.ui.whiteBalanceValueLabel, self.camera_controls)
+        self.analog_gain_slider = CustomSlider(self.ui.analogGainSlider, "AnalogueGain", self.ui.analogGainValueLabel, self.camera_controls)
+        self.contrast_slider = CustomSlider(self.ui.contrastSlider, "Contrast", self.ui.contrastValueLabel, self.camera_controls)
+        self.sharpness_slider = CustomSlider(self.ui.sharpnessSlider, "Sharpness", self.ui.sharpnessValueLabel, self.camera_controls)
+        self.saturation_slider = CustomSlider(self.ui.saturationSlider, "Saturation", self.ui.saturationValueLabel, self.camera_controls)
+        self.brightness_slider = CustomSlider(self.ui.brightnessSlider, "Brightness", self.ui.brightnessValueLabel, self.camera_controls)
 
-
-        # ------- define the buttons -------
-        
-        #self.upArrowButton = CustomButtonController(self.ui.upArrow, "1")
-        #self.leftArrowButton = CustomButtonController(self.ui.leftArrow, "2")
-        #self.downArrowButton = CustomButtonController(self.ui.downArrow, "3")
-        #self.rightArrowButton = CustomButtonController(self.ui.rightArrow, "D")
-        
+        self.initialize_sliders()             
 
         # ------- test the arduino controller -------
 
@@ -77,8 +69,19 @@ class CustomMainWindow(QMainWindow):
         self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.send_serial_message("m"))
 
 
-    def set_sliders(self):
-         self.whiteSlider.set_slider_properties(0, 320, 160)
+    def initialize_sliders(self):
+         self.white_slider.set_slider_properties(0, 320, 160)
+         self.white_slider.connect_slider_camera()
+         self.analog_gain_slider.set_slider_properties(-2000, 5000, 1500)
+         self.analog_gain_slider.connect_slider_camera_1arg()
+         self.contrast_slider.set_slider_properties(0, 200, 100)
+         self.contrast_slider.connect_slider_camera_1arg()
+         self.sharpness_slider.set_slider_properties(0, 400, 100)
+         self.sharpness_slider.connect_slider_camera_1arg()
+         self.saturation_slider.set_slider_properties(0, 200, 100)
+         self.saturation_slider.connect_slider_camera_1arg()
+         self.brightness_slider.set_slider_properties(-50, 50, 0)
+         self.brightness_slider.connect_slider_camera_1arg()
 
 
         

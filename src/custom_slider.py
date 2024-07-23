@@ -3,9 +3,9 @@ class CustomSlider:
         self.slider = slider
         self.camera_controls = camera_controls
         self.label = label
+        self.setting = setting
         self.update_label()
         self.slider.valueChanged.connect(self.update_label)
-        self.connect_slider_camera(setting)
         
 
     def update_label(self):
@@ -20,8 +20,11 @@ class CustomSlider:
     def print_slider_value(self):
         print(self.slider.value()/100)
 
-    def connect_slider_camera(self, setting):
-        self.slider.valueChanged.connect(lambda: self.update_camera_control_2(self.camera_controls, "ColourGains"))
+    def connect_slider_camera(self):
+        self.slider.valueChanged.connect(lambda: self.update_camera_control_2(self.camera_controls, self.setting))
+    
+    def connect_slider_camera_1arg(self):
+        self.slider.valueChanged.connect(lambda: self.update_camera_control(self.camera_controls, self.setting))
 
     def set_slider_properties(self, minimum_value, maximum_value, initial_position):
         self.slider.setMinimum(minimum_value)
