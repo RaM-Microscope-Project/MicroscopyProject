@@ -50,9 +50,16 @@ class AutoHoverButton(QPushButton):
         super().__init__(parent)
         self.setMouseTracking(True)
         self.installEventFilter(self)
+        self.isAlwaysOn = False  # Toggle state
+
+    def mousePressEvent(self, event):
+        self.isAlwaysOn = not self.isAlwaysOn  # Toggle the state on click
+        # if self.isAlwaysOn:
+        #     self.hoverEnter.emit()  # Optionally, turn on immediately on click
+        super().mousePressEvent(event)
 
     def eventFilter(self, obj, event):
-        if obj == self:
+        if obj == self and not self.isAlwaysOn:  # Check if not in always-on mode
             if event.type() == QEvent.Enter:
                 self.hoverEnter.emit()
             elif event.type() == QEvent.Leave:
