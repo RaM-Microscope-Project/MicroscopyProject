@@ -8,7 +8,7 @@ from custom_slider import CustomSlider
 from preview_window import PreviewWindow
 from camera_controls import CameraControls
 from arduino_controller import ArduinoController
-from custom_button_controller import CustomButtonController
+from custom_button_controller import AutoHoverButton
 from protocol_constants import MOVE_STAGE_UP, MOVE_STAGE_DOWN, MOVE_STAGE_LEFT, MOVE_STAGE_RIGHT, STAGE_STOP, RTI_RESET
 from led_button_controller import LedButtonController
 
@@ -54,10 +54,16 @@ class CustomMainWindow(QMainWindow):
 
 
     def initialize_led_buttons(self):
-        led_button_controller = CustomButtonController(self.arduino)
-        for i in range(1, 25):
-            button = getattr(self.ui, f'led_button_{i}')  # dynamically get the button by name
-            led_button_controller.connect_button_with_message(button, str(i))
+        for i in range(1, 25):  # Assuming button names are from led_button_1 to led_button_25
+            button_name = f'led_button_{i}'
+            button = getattr(self.ui, button_name)  # Get the button by name from the UI
+            auto_hover_button = AutoHoverButton.replace_with_auto_hover(button)
+            setattr(self, button_name, auto_hover_button)  # Replace the attribute in self with the new button
+    
+            # Connect hoverEnter and hoverLeave signals
+            auto_hover_button.hoverEnter.connect(lambda i=i: self.arduino.send_serial_message(f'{i}'))
+            auto_hover_button.hoverLeave.connect(lambda i=i: self.arduino.send_serial_message(f'{i}'))
+            
         self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.send_serial_message(RTI_RESET))
 
 
@@ -82,6 +88,7 @@ class CustomMainWindow(QMainWindow):
         self.saturation_slider.connect_slider_camera_1arg()
         self.brightness_slider.set_slider_properties(-50, 50, 0)
         self.brightness_slider.connect_slider_camera_1arg()
+
 
 
         
