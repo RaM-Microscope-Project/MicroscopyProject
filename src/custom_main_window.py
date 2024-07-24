@@ -65,6 +65,7 @@ class CustomMainWindow(QMainWindow):
             auto_hover_button.hoverLeave.connect(lambda i=i: self.arduino.send_serial_message(f'{i}'))
             
         self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.send_serial_message(RTI_RESET))
+        self.ui.rti_reset_button.clicked.connect(self.reset_led_buttons)
 
 
     def initialize_sliders(self):
@@ -88,6 +89,14 @@ class CustomMainWindow(QMainWindow):
         self.saturation_slider.connect_slider_camera_1arg()
         self.brightness_slider.set_slider_properties(-50, 50, 0)
         self.brightness_slider.connect_slider_camera_1arg()
+
+    def reset_led_buttons(self):
+    # Reset hover buttons
+        for i in range(1, 25):  
+            button_name = f'led_button_{i}'
+            button = getattr(self, button_name)
+            button.reset()  
+
 
 
 

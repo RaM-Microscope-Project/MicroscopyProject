@@ -27,6 +27,10 @@ class HoverButton(QPushButton):
         #     self.hoverEnter.emit()  # Optionally, turn on immediately on click
         super().mousePressEvent(event)
 
+    def reset(self):
+        self.isAlwaysOn = False
+        self.setStyleSheet("background-color: grey;")
+
     def eventFilter(self, obj, event):
         if obj == self and not self.isAlwaysOn:  # Check if not in always-on mode
             if event.type() == QEvent.Enter:
