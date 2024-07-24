@@ -8,7 +8,7 @@ from custom_slider import CustomSlider
 from preview_window import PreviewWindow
 from camera_controls import CameraControls
 from arduino_controller import ArduinoController
-from custom_button_controller import AutoHoverButton
+from hover_button import HoverButton
 from protocol_constants import MOVE_STAGE_UP, MOVE_STAGE_DOWN, MOVE_STAGE_LEFT, MOVE_STAGE_RIGHT, STAGE_STOP, RTI_RESET
 from led_button_controller import LedButtonController
 
@@ -57,7 +57,7 @@ class CustomMainWindow(QMainWindow):
         for i in range(1, 25):  # Assuming button names are from led_button_1 to led_button_25
             button_name = f'led_button_{i}'
             button = getattr(self.ui, button_name)  # Get the button by name from the UI
-            auto_hover_button = AutoHoverButton.replace_with_auto_hover(button)
+            auto_hover_button = HoverButton.replace_with_auto_hover(button)
             setattr(self, button_name, auto_hover_button)  # Replace the attribute in self with the new button
     
             # Connect hoverEnter and hoverLeave signals
