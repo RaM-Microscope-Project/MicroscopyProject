@@ -34,6 +34,8 @@ long targetPos3 = 0;
 String inputString = "";      // A string to hold incoming data
 bool stringComplete = false;  // Whether the string is complete
 
+bool runAtSpeed = false;
+
 void setup() {
   // LED setup
   FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
@@ -47,13 +49,13 @@ void setup() {
 
   // Set maximum speed and acceleration for each motor
   stepper1.setMaxSpeed(1000);
-  stepper1.setAcceleration(5000);
+  //stepper1.setAcceleration(5000);
 
   stepper2.setMaxSpeed(1000);
-  stepper2.setAcceleration(5000);
+  //stepper2.setAcceleration(5000);
 
   stepper3.setMaxSpeed(1000);
-  stepper3.setAcceleration(5000);
+  //stepper3.setAcceleration(5000);
 
   // Debug test if motors run at all
   // stepper1.setSpeed(500);
@@ -81,30 +83,44 @@ void loop() {
       stepper1.setSpeed(500);
       stepper2.setSpeed(-500);
       stepper3.setSpeed(0);
+
+      runAtSpeed = true;
     } else if (inputString == "a") {
       Serial.println("Key A pressed. Moving motors...");
       // Move stepper1 counterclockwise and stepper2 clockwise
       stepper1.setSpeed(-500);
       stepper2.setSpeed(500);
       stepper3.setSpeed(0);
+
+      runAtSpeed = true;
     } else if (inputString == "s") {
       Serial.println("Key S pressed. Moving motors...");
       // Move stepper1 and stepper2 clockwise, stepper3 counterclockwise
       stepper1.setSpeed(500);
       stepper2.setSpeed(500);
       stepper3.setSpeed(-500);
+
+      runAtSpeed = true;
     } else if (inputString == "w") {
       Serial.println("Key W pressed. Moving motors...");
       // Move stepper1 and stepper2 counterclockwise, stepper3 clockwise
       stepper1.setSpeed(-500);
       stepper2.setSpeed(-500);
       stepper3.setSpeed(500);
+
+      runAtSpeed = true;
     } else if (inputString == "q") {
       Serial.println("Q for Quit. Stopping all motors...");
       // Stop all motors
       stepper1.setSpeed(0);
       stepper2.setSpeed(0);
       stepper3.setSpeed(0);
+
+      // stepper1.stop();
+      // stepper2.stop();
+      // stepper3.stop();
+
+      runAtSpeed = false;
 
     } else if (inputString == "m") {
       Serial.println("M for Mute. Turning off all LEDs...");
@@ -123,24 +139,32 @@ void loop() {
       toggleMotor(stepper1, 500);
       stepper2.setSpeed(0);
       stepper3.setSpeed(0);
+
+      runAtSpeed = true;
     } else if (inputString == "j") {
       Serial.println("Motor 1 running clockwise...");
       // Move stepper1 clockwise
       toggleMotor(stepper1, -500);
       stepper2.setSpeed(0);
       stepper3.setSpeed(0);
+
+      runAtSpeed = true;
     } else if (inputString == "o") {
       Serial.println("Motor 2 running anticlockwise...");
       // Move stepper2 anticlockwise
       stepper1.setSpeed(0);
       toggleMotor(stepper2, 500);
       stepper3.setSpeed(0);
+
+      runAtSpeed = true;
     } else if (inputString == "k") {
       Serial.println("Motor 2 running clockwise...");
       // Move stepper2 clockwise
       stepper1.setSpeed(0);
       toggleMotor(stepper2, -500);
       stepper3.setSpeed(0);
+
+      runAtSpeed = true;
     }
 
     else if (inputString == "p") {
@@ -148,6 +172,8 @@ void loop() {
       stepper1.setSpeed(0);
       stepper2.setSpeed(0);
       toggleMotor(stepper3, 500);
+
+      runAtSpeed = true;
     }
 
     else if (inputString == "l") {
@@ -155,6 +181,36 @@ void loop() {
       stepper1.setSpeed(0);
       stepper2.setSpeed(0);
       toggleMotor(stepper3, -500);
+
+      runAtSpeed = true;
+    }
+
+    else if (inputString == "c") {
+      // calibrate centre. Set all stepper position to zero
+      stepper1.setCurrentPosition(0);
+      stepper2.setCurrentPosition(0);
+      stepper3.setCurrentPosition(0);
+      Serial.println("Centre position set.");
+    }
+
+    else if (inputString == "r") {
+      //motors will not move with zero speed and acceleration
+      stepper1.setSpeed(1000);
+      stepper2.setSpeed(1000);
+      stepper3.setSpeed(1000);
+      stepper1.setAcceleration(2000);
+      stepper2.setAcceleration(2000);
+      stepper3.setAcceleration(2000);
+
+      // Return to calibrated centre
+      stepper1.moveTo(0); //moving to 0 only works when not pressing q before...
+      stepper2.moveTo(0);
+      stepper3.moveTo(0);
+      
+      runAtSpeed = false;
+
+      Serial.println("Returning to centre.");
+      //Serial.println(stepper1.distanceToGo());
     }
 
     else {
@@ -166,10 +222,24 @@ void loop() {
     stringComplete = false;
   }
 
-  // Run the motors
-  stepper1.runSpeed();
-  stepper2.runSpeed();
-  stepper3.runSpeed();
+  if (runAtSpeed) {
+    // Run the motors
+    stepper1.runSpeed();
+    stepper2.runSpeed();
+    stepper3.runSpeed();
+  }
+
+  else if (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0 || stepper3.distanceToGo() != 0) {
+    // Run the motors in case of return to centre
+    //Serial.println("steppers run");
+    stepper1.run();
+    stepper2.run();
+    stepper3.run();
+  }
+
+  // Report position of motor 1
+  //Serial.print("Position of motor 1: ");
+  //Serial.println(stepper1.currentPosition());
 }
 
 void toggleMotor(AccelStepper &motor, int newSpeed) {
