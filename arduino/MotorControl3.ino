@@ -27,6 +27,9 @@ AccelStepper stepper2(AccelStepper::FULL4WIRE, 4, 6, 5, 7);
 // Initialize the third stepper motor on pins 2, 13, 3, 12
 AccelStepper stepper3(AccelStepper::FULL4WIRE, 2, 13, 3, 12);
 
+//Future fourth stepper motor
+//AccelStepper stepper3(AccelStepper::FULL4WIRE, pin0, pin1, pin2, pin3);
+
 long targetPos1 = 0;
 long targetPos2 = 0;
 long targetPos3 = 0;
@@ -35,6 +38,9 @@ String inputString = "";      // A string to hold incoming data
 bool stringComplete = false;  // Whether the string is complete
 
 bool runAtSpeed = false;
+
+long motorMinPosition = -2000;
+long motorMaxPosition = 2000;
 
 void setup() {
   // LED setup
@@ -80,8 +86,12 @@ void loop() {
     else if (inputString == "d") {
       Serial.println("Key D pressed. Moving motors...");
       // Move stepper1 clockwise and stepper2 counterclockwise
-      stepper1.setSpeed(500);
-      stepper2.setSpeed(-500);
+      Serial.print(isWithinLimits(stepper1));
+      Serial.println(isWithinLimits(stepper2));
+      //if (isWithinLimits(stepper1) && isWithinLimits(stepper2)) {
+        stepper1.setSpeed(500);
+        stepper2.setSpeed(-500);
+      //}
       stepper3.setSpeed(0);
 
       runAtSpeed = true;
@@ -130,6 +140,15 @@ void loop() {
       FastLED.show();
     }
 
+    else if(inputString == "z"){
+      Serial.println("Moving lens up");
+      //stepper4.setSpeed(200);
+    }
+
+    else if(inputString == "x"){
+      Serial.println("Moving lens down");
+      //stepper4.setSpeed(200);
+    }
 
     //Motor debug starts here
 
@@ -203,10 +222,10 @@ void loop() {
       stepper3.setAcceleration(2000);
 
       // Return to calibrated centre
-      stepper1.moveTo(0); //moving to 0 only works when not pressing q before...
+      stepper1.moveTo(0);
       stepper2.moveTo(0);
       stepper3.moveTo(0);
-      
+
       runAtSpeed = false;
 
       Serial.println("Returning to centre.");
@@ -223,10 +242,16 @@ void loop() {
   }
 
   if (runAtSpeed) {
-    // Run the motors
-    stepper1.runSpeed();
-    stepper2.runSpeed();
-    stepper3.runSpeed();
+    // Run the motors if not outside limits
+    //if (isWithinLimits(stepper1)) {
+      stepper1.runSpeed();
+    //}
+    //if (isWithinLimits(stepper2)){
+      stepper2.runSpeed();
+    //}
+    //if (isWithinLimits(stepper3)){
+      stepper3.runSpeed();
+    //}
   }
 
   else if (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0 || stepper3.distanceToGo() != 0) {
@@ -240,6 +265,11 @@ void loop() {
   // Report position of motor 1
   //Serial.print("Position of motor 1: ");
   //Serial.println(stepper1.currentPosition());
+}
+
+bool isWithinLimits(AccelStepper &motor) {
+  long currentPos = motor.currentPosition();
+  return (currentPos > motorMinPosition && currentPos < motorMaxPosition);
 }
 
 void toggleMotor(AccelStepper &motor, int newSpeed) {
@@ -259,14 +289,6 @@ void toggleLED(int ledIndex, CRGB color) {
     leds[ledIndex] = CRGB::Black;  // Turn off LED
   }
   FastLED.show();
-}
-
-void moveStage() {
-  Serial.println("moving stage...");
-}
-
-void controlLEDs() {
-  Serial.println("controlling LEDs...");
 }
 
 void inputToString() {
