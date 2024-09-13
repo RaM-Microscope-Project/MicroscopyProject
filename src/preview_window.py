@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import (QPushButton, QVBoxLayout, QWidget)
+from PyQt5.QtCore import Qt
 # Todo: Check QButtonGroup
 
 # ----- Camera imports -------------------------------------------
@@ -31,7 +32,7 @@ from libcamera import controls
 # # picam2.set_controls({"AwbEnable": True})
 # picam2.set_controls({"AeExposureMode": controls.AeExposureModeEnum.Long})
 
-
+#--- End of MyPreviewWidget ---
 class PreviewWindow(QWidget):
     
     #--- MyPreviewWidget ---
@@ -42,8 +43,8 @@ class PreviewWindow(QWidget):
             super(QWidget, self).__init__()
             self.setLayout(subLayout)
             
-    #--- End of MyPreviewWidget ---
-        
+    
+            
 
     def on_Capture_Clicked(self):
         # There are two buttons on Main/Child Window connected here,
