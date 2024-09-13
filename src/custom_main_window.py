@@ -1,3 +1,5 @@
+# Class created by MateiObrocea
+
 import os, sys, platform
 from PyQt5 import QtCore, QtWidgets
 
