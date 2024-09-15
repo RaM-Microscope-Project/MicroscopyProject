@@ -3,7 +3,8 @@ import serial, time
 
 class ArduinoController:
     """
-    Controller class handling user input and updating the model.
+    Controller class handling input from the GUI and sending commands to the Arduino.
+    Basically the serial communication happens here.
     """
 
     def __init__(self):
