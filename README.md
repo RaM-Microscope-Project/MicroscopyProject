@@ -4,12 +4,6 @@
 The software provides a GUI for controlling the stage, camera, and LEDs of the RTI dome, and is 
 responsible for correctly handling the user inputs.*
 
-## **Table of Contents**
-
-- [Description](#description)
-- [Installation](#installation)
-- [Usage](#usage)
-
 ## **Description**
 
 **Key Features**
