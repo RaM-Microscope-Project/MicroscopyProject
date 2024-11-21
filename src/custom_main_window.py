@@ -13,6 +13,7 @@ from arduino_controller import ArduinoController
 from hover_button import HoverButton
 #from protocol_constants import MOVE_STAGE_UP, MOVE_STAGE_DOWN, MOVE_STAGE_LEFT, MOVE_STAGE_RIGHT, STAGE_STOP, RTI_RESET
 from led_button_controller import LedButtonController
+from automations import Automations
 
 # ----- Camera imports ---------------------------------------------------------
 
@@ -34,11 +35,18 @@ class CustomMainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.arduino = ArduinoController()
+        self.automation = Automations()
      
         self.initialize_camera_controls()
         self.initialize_sliders()             
         self.initialize_stage_controls()
         self.initialize_led_buttons()
+        self.initialize_scan_buttons()
+
+    def initialize_scan_buttons(self):
+        self.ui.scan_rti.pressed.connect(self.automation.RTI)
+        self.ui.scan_sp.pressed.connect(self.automation.stereo_photography)
+        self.ui.scan_fs.pressed.connect(self.automation.focus_stack)
 
         
     def initialize_camera_controls(self):
