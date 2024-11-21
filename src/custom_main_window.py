@@ -1,17 +1,17 @@
 # Class created by MateiObrocea
 
-import os, sys, platform
+import os, sys, platform, threading
 from PyQt5 import QtCore, QtWidgets
 
 
 # ----- Imports of the other classes -------------------------------------------
-from graphical_user_interface import Ui_MainWindow
+from UI import Ui_MainWindow
 from custom_slider import CustomSlider
 from preview_window import PreviewWindow
 from camera_controls import CameraControls
 from arduino_controller import ArduinoController
 from hover_button import HoverButton
-from protocol_constants import MOVE_STAGE_UP, MOVE_STAGE_DOWN, MOVE_STAGE_LEFT, MOVE_STAGE_RIGHT, STAGE_STOP, RTI_RESET
+#from protocol_constants import MOVE_STAGE_UP, MOVE_STAGE_DOWN, MOVE_STAGE_LEFT, MOVE_STAGE_RIGHT, STAGE_STOP, RTI_RESET
 from led_button_controller import LedButtonController
 
 # ----- Camera imports ---------------------------------------------------------
@@ -40,20 +40,22 @@ class CustomMainWindow(QMainWindow):
         self.initialize_stage_controls()
         self.initialize_led_buttons()
 
-
         
     def initialize_camera_controls(self):
         self.camera_controls = CameraControls()
         self.main_widget = PreviewWindow(self, self.camera_controls)
 
-
     def initialize_stage_controls(self):
-        self.ui.upArrow.clicked.connect(lambda: self.arduino.move_stage(MOVE_STAGE_UP))
-        self.ui.leftArrow.clicked.connect(lambda: self.arduino.move_stage(MOVE_STAGE_LEFT))
-        self.ui.downArrow.clicked.connect(lambda: self.arduino.move_stage(MOVE_STAGE_DOWN))
-        self.ui.rightArrow.clicked.connect(lambda: self.arduino.move_stage(MOVE_STAGE_RIGHT))
-        self.ui.stage_stop_button.clicked.connect(lambda: self.arduino.move_stage(STAGE_STOP))
-
+        self.ui.speed_slider.valueChanged.connect(self.arduino.set_speed)
+        self.ui.upArrow.pressed.connect(lambda: self.arduino.move_stage("Y"))
+        self.ui.upArrow.released.connect(lambda: self.arduino.move_stage("S"))
+        self.ui.leftArrow.pressed.connect(lambda: self.arduino.move_stage("x"))
+        self.ui.leftArrow.released.connect(lambda: self.arduino.move_stage("S"))
+        self.ui.downArrow.pressed.connect(lambda: self.arduino.move_stage("y"))
+        self.ui.downArrow.released.connect(lambda: self.arduino.move_stage("S"))
+        self.ui.rightArrow.pressed.connect(lambda: self.arduino.move_stage("X"))
+        self.ui.rightArrow.released.connect(lambda: self.arduino.move_stage("S"))
+        self.ui.stage_stop_button.clicked.connect(lambda: self.arduino.move_stage("C"))
 
     def initialize_led_buttons(self):
         for i in range(1, 25):  # Assuming button names are from led_button_1 to led_button_25
@@ -63,8 +65,8 @@ class CustomMainWindow(QMainWindow):
             setattr(self, button_name, auto_hover_button)  # Replace the attribute in self with the new button
     
             # Connect hoverEnter and hoverLeave signals
-            auto_hover_button.hoverEnter.connect(lambda i=i: self.arduino.send_serial_message(f'{i}'))
-            auto_hover_button.hoverLeave.connect(lambda i=i: self.arduino.send_serial_message(f'{i}'))
+            auto_hover_button.hoverEnter.connect(lambda i=i: self.arduino.send_serial_message(f'LED{i}'))
+            auto_hover_button.hoverLeave.connect(lambda i=i: self.arduino.send_serial_message(f'LED{i}'))
             
         self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.send_serial_message(RTI_RESET))
         self.ui.rti_reset_button.clicked.connect(self.reset_led_buttons)

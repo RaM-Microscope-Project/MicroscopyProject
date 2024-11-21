@@ -1,19 +1,22 @@
 import serial, time
+import protocol_constants as c
 
 class ArduinoController:
     """Controller class handling user input and updating the model."""
 
     def __init__(self):
         try:
-            self.serial_connection = serial.Serial('/dev/ttyACM0', 9600)
+            self.serial_connection = serial.Serial('/dev/ttyUSB0', 115200)
             time.sleep(2)  # Give some time for the Arduino to initialize
         except Exception as e:
             print("Error: ", e)
 
+    def set_speed(self, value):
+        self.send_serial_message(f"SPEED{value}")
 
-    def move_stage(self, command):
-        # command = buttonController.command
-        self.send_serial_message(command)
+    def move_stage(self, dir):
+        self.send_serial_message(dir)
+
 
     def send_serial_message(self, message):
         print (message)

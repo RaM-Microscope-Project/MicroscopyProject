@@ -116,7 +116,7 @@ QSlider::handle:horizontal {
        <property name="bottomMargin">
         <number>9</number>
        </property>
-       <item alignment="Qt::AlignmentFlag::Qt::AlignmentFlag::AlignTop">
+       <item alignment="Qt::AlignTop">
         <widget class="QWidget" name="headerContainer" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -143,10 +143,10 @@ QSlider::handle:horizontal {
           <item>
            <widget class="QFrame" name="frame_5">
             <property name="frameShape">
-             <enum>QFrame::Shape::StyledPanel</enum>
+             <enum>QFrame::StyledPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Shadow::Raised</enum>
+             <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <property name="spacing">
@@ -164,11 +164,12 @@ QSlider::handle:horizontal {
              <property name="bottomMargin">
               <number>9</number>
              </property>
-             <item alignment="">
+             <item alignment="Qt::AlignHCenter">
               <widget class="QLabel" name="label_6">
                <property name="font">
                 <font>
                  <pointsize>11</pointsize>
+                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -228,13 +229,13 @@ QSlider::handle:horizontal {
              <item>
               <widget class="QFrame" name="frame_11">
                <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
+                <enum>QFrame::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_12">
-                <item alignment="">
+                <item alignment="Qt::AlignLeft">
                  <widget class="QLabel" name="label_2">
                   <property name="font">
                    <font>
@@ -252,7 +253,7 @@ QSlider::handle:horizontal {
              <item>
               <spacer name="verticalSpacer">
                <property name="orientation">
-                <enum>Qt::Orientation::Vertical</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
@@ -271,13 +272,13 @@ QSlider::handle:horizontal {
                 </sizepolicy>
                </property>
                <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
+                <enum>QFrame::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">
-                <item alignment="">
+                <item alignment="Qt::AlignHCenter">
                  <widget class="QPushButton" name="upArrow">
                   <property name="text">
                    <string/>
@@ -300,13 +301,13 @@ QSlider::handle:horizontal {
              <item>
               <widget class="QFrame" name="frame_10">
                <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
+                <enum>QFrame::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_9">
-                <item alignment="">
+                <item alignment="Qt::AlignLeft">
                  <widget class="QPushButton" name="leftArrow">
                   <property name="text">
                    <string/>
@@ -331,6 +332,7 @@ QSlider::handle:horizontal {
                   <property name="font">
                    <font>
                     <pointsize>14</pointsize>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -340,11 +342,11 @@ background-color: transparent;
 padding: 8px;</string>
                   </property>
                   <property name="text">
-                   <string>Stop</string>
+                   <string>Calibrate</string>
                   </property>
                  </widget>
                 </item>
-                <item alignment="">
+                <item alignment="Qt::AlignRight">
                  <widget class="QPushButton" name="rightArrow">
                   <property name="text">
                    <string/>
@@ -367,13 +369,13 @@ padding: 8px;</string>
              <item>
               <widget class="QFrame" name="frame_8">
                <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
+                <enum>QFrame::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_10">
-                <item alignment="">
+                <item alignment="Qt::AlignHCenter">
                  <widget class="QPushButton" name="downArrow">
                   <property name="text">
                    <string/>
@@ -394,12 +396,65 @@ padding: 8px;</string>
               </widget>
              </item>
              <item>
+              <widget class="QLabel" name="label">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Speed</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="speed_slider">
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>5</number>
+               </property>
+               <property name="sliderPosition">
+                <number>5</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+               <property name="tickInterval">
+                <number>1</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
               <widget class="QFrame" name="frame_4">
                <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
+                <enum>QFrame::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_3">
                 <property name="spacing">
@@ -442,6 +497,7 @@ padding: 8px;</string>
                   <property name="font">
                    <font>
                     <pointsize>16</pointsize>
+                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -449,7 +505,7 @@ padding: 8px;</string>
                    <string>Camera</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop</set>
+                   <set>Qt::AlignHCenter|Qt::AlignTop</set>
                   </property>
                  </widget>
                 </item>
@@ -477,13 +533,13 @@ padding: 8px;</string>
              <item>
               <widget class="QFrame" name="cameraSettingsHeaderFrame">
                <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
+                <enum>QFrame::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_14">
-                <item alignment="">
+                <item alignment="Qt::AlignLeft">
                  <widget class="QLabel" name="label_3">
                   <property name="font">
                    <font>
@@ -507,28 +563,28 @@ padding: 8px;</string>
                 </sizepolicy>
                </property>
                <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
+                <enum>QFrame::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_8">
                 <item>
                  <widget class="QFrame" name="whiteBalanceFrame">
                   <property name="frameShape">
-                   <enum>QFrame::Shape::StyledPanel</enum>
+                   <enum>QFrame::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Shadow::Raised</enum>
+                   <enum>QFrame::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_12">
                    <item>
                     <widget class="QFrame" name="frame_2">
                      <property name="frameShape">
-                      <enum>QFrame::Shape::StyledPanel</enum>
+                      <enum>QFrame::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Shadow::Raised</enum>
+                      <enum>QFrame::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_2">
                       <property name="spacing">
@@ -546,14 +602,14 @@ padding: 8px;</string>
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item alignment="">
+                      <item alignment="Qt::AlignLeft">
                        <widget class="QLabel" name="whiteBalanceLabel">
                         <property name="text">
                          <string>White Balance</string>
                         </property>
                        </widget>
                       </item>
-                      <item alignment="">
+                      <item alignment="Qt::AlignRight">
                        <widget class="QLabel" name="whiteBalanceValueLabel">
                         <property name="text">
                          <string>Value</string>
@@ -566,7 +622,7 @@ padding: 8px;</string>
                    <item>
                     <widget class="QSlider" name="whiteBalanceSlider">
                      <property name="orientation">
-                      <enum>Qt::Orientation::Horizontal</enum>
+                      <enum>Qt::Horizontal</enum>
                      </property>
                     </widget>
                    </item>
@@ -576,19 +632,19 @@ padding: 8px;</string>
                 <item>
                  <widget class="QFrame" name="analogGainFrame">
                   <property name="frameShape">
-                   <enum>QFrame::Shape::StyledPanel</enum>
+                   <enum>QFrame::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Shadow::Raised</enum>
+                   <enum>QFrame::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_21">
                    <item>
                     <widget class="QFrame" name="frame_29">
                      <property name="frameShape">
-                      <enum>QFrame::Shape::StyledPanel</enum>
+                      <enum>QFrame::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Shadow::Raised</enum>
+                      <enum>QFrame::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_15">
                       <property name="spacing">
@@ -606,14 +662,14 @@ padding: 8px;</string>
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item alignment="">
+                      <item alignment="Qt::AlignLeft">
                        <widget class="QLabel" name="analogGainLabel">
                         <property name="text">
                          <string>Analog Gain</string>
                         </property>
                        </widget>
                       </item>
-                      <item alignment="">
+                      <item alignment="Qt::AlignRight">
                        <widget class="QLabel" name="analogGainValueLabel">
                         <property name="text">
                          <string>Value</string>
@@ -626,7 +682,7 @@ padding: 8px;</string>
                    <item>
                     <widget class="QSlider" name="analogGainSlider">
                      <property name="orientation">
-                      <enum>Qt::Orientation::Horizontal</enum>
+                      <enum>Qt::Horizontal</enum>
                      </property>
                     </widget>
                    </item>
@@ -636,19 +692,19 @@ padding: 8px;</string>
                 <item>
                  <widget class="QFrame" name="contrastFrame">
                   <property name="frameShape">
-                   <enum>QFrame::Shape::StyledPanel</enum>
+                   <enum>QFrame::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Shadow::Raised</enum>
+                   <enum>QFrame::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_19">
                    <item>
                     <widget class="QFrame" name="frame_26">
                      <property name="frameShape">
-                      <enum>QFrame::Shape::StyledPanel</enum>
+                      <enum>QFrame::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Shadow::Raised</enum>
+                      <enum>QFrame::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_11">
                       <property name="spacing">
@@ -666,14 +722,14 @@ padding: 8px;</string>
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item alignment="">
+                      <item alignment="Qt::AlignLeft">
                        <widget class="QLabel" name="contrastLabel">
                         <property name="text">
                          <string>Contrast</string>
                         </property>
                        </widget>
                       </item>
-                      <item alignment="">
+                      <item alignment="Qt::AlignRight">
                        <widget class="QLabel" name="contrastValueLabel">
                         <property name="text">
                          <string>Value</string>
@@ -686,7 +742,7 @@ padding: 8px;</string>
                    <item>
                     <widget class="QSlider" name="contrastSlider">
                      <property name="orientation">
-                      <enum>Qt::Orientation::Horizontal</enum>
+                      <enum>Qt::Horizontal</enum>
                      </property>
                     </widget>
                    </item>
@@ -696,19 +752,19 @@ padding: 8px;</string>
                 <item>
                  <widget class="QFrame" name="sharpnessFrame">
                   <property name="frameShape">
-                   <enum>QFrame::Shape::StyledPanel</enum>
+                   <enum>QFrame::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Shadow::Raised</enum>
+                   <enum>QFrame::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_6">
                    <item>
                     <widget class="QFrame" name="frame_3">
                      <property name="frameShape">
-                      <enum>QFrame::Shape::StyledPanel</enum>
+                      <enum>QFrame::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Shadow::Raised</enum>
+                      <enum>QFrame::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_3">
                       <property name="spacing">
@@ -726,14 +782,14 @@ padding: 8px;</string>
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item alignment="">
+                      <item alignment="Qt::AlignLeft">
                        <widget class="QLabel" name="sharpnessLabel">
                         <property name="text">
                          <string>Sharpness</string>
                         </property>
                        </widget>
                       </item>
-                      <item alignment="">
+                      <item alignment="Qt::AlignRight">
                        <widget class="QLabel" name="sharpnessValueLabel">
                         <property name="text">
                          <string>Value</string>
@@ -746,7 +802,7 @@ padding: 8px;</string>
                    <item>
                     <widget class="QSlider" name="sharpnessSlider">
                      <property name="orientation">
-                      <enum>Qt::Orientation::Horizontal</enum>
+                      <enum>Qt::Horizontal</enum>
                      </property>
                     </widget>
                    </item>
@@ -756,19 +812,19 @@ padding: 8px;</string>
                 <item>
                  <widget class="QFrame" name="saturationFrame">
                   <property name="frameShape">
-                   <enum>QFrame::Shape::StyledPanel</enum>
+                   <enum>QFrame::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Shadow::Raised</enum>
+                   <enum>QFrame::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_17">
                    <item>
                     <widget class="QFrame" name="frame_7">
                      <property name="frameShape">
-                      <enum>QFrame::Shape::StyledPanel</enum>
+                      <enum>QFrame::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Shadow::Raised</enum>
+                      <enum>QFrame::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_7">
                       <property name="spacing">
@@ -786,14 +842,14 @@ padding: 8px;</string>
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item alignment="">
+                      <item alignment="Qt::AlignLeft">
                        <widget class="QLabel" name="saturationLabel">
                         <property name="text">
                          <string>Saturation</string>
                         </property>
                        </widget>
                       </item>
-                      <item alignment="">
+                      <item alignment="Qt::AlignRight">
                        <widget class="QLabel" name="saturationValueLabel">
                         <property name="text">
                          <string>Value</string>
@@ -806,7 +862,7 @@ padding: 8px;</string>
                    <item>
                     <widget class="QSlider" name="saturationSlider">
                      <property name="orientation">
-                      <enum>Qt::Orientation::Horizontal</enum>
+                      <enum>Qt::Horizontal</enum>
                      </property>
                     </widget>
                    </item>
@@ -816,19 +872,19 @@ padding: 8px;</string>
                 <item>
                  <widget class="QFrame" name="brightnessFrame">
                   <property name="frameShape">
-                   <enum>QFrame::Shape::StyledPanel</enum>
+                   <enum>QFrame::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Shadow::Raised</enum>
+                   <enum>QFrame::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_15">
                    <item>
                     <widget class="QFrame" name="frame_6">
                      <property name="frameShape">
-                      <enum>QFrame::Shape::StyledPanel</enum>
+                      <enum>QFrame::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Shadow::Raised</enum>
+                      <enum>QFrame::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_5">
                       <property name="spacing">
@@ -846,14 +902,14 @@ padding: 8px;</string>
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item alignment="">
+                      <item alignment="Qt::AlignLeft">
                        <widget class="QLabel" name="brightnessLabel">
                         <property name="text">
                          <string>Brightness</string>
                         </property>
                        </widget>
                       </item>
-                      <item alignment="">
+                      <item alignment="Qt::AlignRight">
                        <widget class="QLabel" name="brightnessValueLabel">
                         <property name="text">
                          <string>Value</string>
@@ -866,7 +922,7 @@ padding: 8px;</string>
                    <item>
                     <widget class="QSlider" name="brightnessSlider">
                      <property name="orientation">
-                      <enum>Qt::Orientation::Horizontal</enum>
+                      <enum>Qt::Horizontal</enum>
                      </property>
                     </widget>
                    </item>
@@ -894,16 +950,16 @@ padding: 8px;</string>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_7">
-             <item alignment="Qt::AlignmentFlag::Qt::AlignmentFlag::AlignTop">
+             <item alignment="Qt::AlignTop">
               <widget class="QFrame" name="frame_13">
                <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
+                <enum>QFrame::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_13">
-                <item alignment="">
+                <item alignment="Qt::AlignLeft">
                  <widget class="QLabel" name="label_4">
                   <property name="font">
                    <font>
@@ -911,7 +967,7 @@ padding: 8px;</string>
                    </font>
                   </property>
                   <property name="text">
-                   <string>-------RTI----------</string>
+                   <string>Lighting Control</string>
                   </property>
                  </widget>
                 </item>
@@ -936,10 +992,10 @@ padding: 8px;</string>
                 <string notr="true"/>
                </property>
                <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
+                <enum>QFrame::Raised</enum>
                </property>
                <widget class="QPushButton" name="led_Layer_1">
                 <property name="geometry">
@@ -1073,7 +1129,7 @@ color: #4CAF50;</string>
                 <property name="geometry">
                  <rect>
                   <x>230</x>
-                  <y>320</y>
+                  <y>330</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1120,8 +1176,8 @@ color: #4CAF50;</string>
                <widget class="QPushButton" name="led_button_10">
                 <property name="geometry">
                  <rect>
-                  <x>100</x>
-                  <y>150</y>
+                  <x>110</x>
+                  <y>140</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1136,8 +1192,8 @@ color: #4CAF50;</string>
                <widget class="QPushButton" name="led_button_17">
                 <property name="geometry">
                  <rect>
-                  <x>380</x>
-                  <y>100</y>
+                  <x>390</x>
+                  <y>110</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1169,7 +1225,7 @@ color: #4CAF50;</string>
                 <property name="geometry">
                  <rect>
                   <x>230</x>
-                  <y>270</y>
+                  <y>280</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1184,8 +1240,8 @@ color: #4CAF50;</string>
                <widget class="QPushButton" name="led_button_9">
                 <property name="geometry">
                  <rect>
-                  <x>60</x>
-                  <y>120</y>
+                  <x>70</x>
+                  <y>110</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1201,7 +1257,7 @@ color: #4CAF50;</string>
                 <property name="geometry">
                  <rect>
                   <x>310</x>
-                  <y>290</y>
+                  <y>280</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1217,7 +1273,7 @@ color: #4CAF50;</string>
                 <property name="geometry">
                  <rect>
                   <x>150</x>
-                  <y>290</y>
+                  <y>280</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1233,7 +1289,7 @@ color: #4CAF50;</string>
                 <property name="geometry">
                  <rect>
                   <x>350</x>
-                  <y>320</y>
+                  <y>310</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1248,8 +1304,8 @@ color: #4CAF50;</string>
                <widget class="QPushButton" name="led_button_18">
                 <property name="geometry">
                  <rect>
-                  <x>340</x>
-                  <y>130</y>
+                  <x>350</x>
+                  <y>140</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1265,7 +1321,7 @@ color: #4CAF50;</string>
                 <property name="geometry">
                  <rect>
                   <x>150</x>
-                  <y>180</y>
+                  <y>170</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1297,7 +1353,7 @@ color: #4CAF50;</string>
                 <property name="geometry">
                  <rect>
                   <x>110</x>
-                  <y>330</y>
+                  <y>310</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1312,8 +1368,8 @@ color: #4CAF50;</string>
                <widget class="QPushButton" name="led_button_8">
                 <property name="geometry">
                  <rect>
-                  <x>80</x>
-                  <y>370</y>
+                  <x>70</x>
+                  <y>340</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1329,7 +1385,7 @@ color: #4CAF50;</string>
                 <property name="geometry">
                  <rect>
                   <x>390</x>
-                  <y>350</y>
+                  <y>340</y>
                   <width>40</width>
                   <height>40</height>
                  </rect>
@@ -1360,7 +1416,7 @@ color: #4CAF50;</string>
                <widget class="QPushButton" name="led_button_19">
                 <property name="geometry">
                  <rect>
-                  <x>300</x>
+                  <x>310</x>
                   <y>170</y>
                   <width>40</width>
                   <height>40</height>
