@@ -2,6 +2,8 @@
 
 import os, sys, platform, threading
 from PyQt5 import QtCore, QtWidgets
+from time import sleep
+import asyncio
 
 
 # ----- Imports of the other classes -------------------------------------------
@@ -35,23 +37,25 @@ class CustomMainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.arduino = ArduinoController()
-        self.automation = Automations()
+        
      
         self.initialize_camera_controls()
         self.initialize_sliders()             
         self.initialize_stage_controls()
         self.initialize_led_buttons()
         self.initialize_scan_buttons()
+        
+        self.automation = Automations(self.arduino, self.main_widget)
 
     def initialize_scan_buttons(self):
-        self.ui.scan_rti.pressed.connect(self.automation.RTI)
-        self.ui.scan_sp.pressed.connect(self.automation.stereo_photography)
-        self.ui.scan_fs.pressed.connect(self.automation.focus_stack)
+        self.ui.scan_rti.pressed.connect(self.main_widget.init_RTI)
+        #self.ui.scan_sp.pressed.connect(self.stereo_photography)
+        #self.ui.scan_fs.pressed.connect(self.focus_stack)
 
         
     def initialize_camera_controls(self):
         self.camera_controls = CameraControls()
-        self.main_widget = PreviewWindow(self, self.camera_controls)
+        self.main_widget = PreviewWindow(self, self.camera_controls, self.arduino)
 
     def initialize_stage_controls(self):
         self.ui.speed_slider.valueChanged.connect(self.arduino.set_speed)
@@ -73,8 +77,8 @@ class CustomMainWindow(QMainWindow):
             setattr(self, button_name, auto_hover_button)  # Replace the attribute in self with the new button
     
             # Connect hoverEnter and hoverLeave signals
-            auto_hover_button.hoverEnter.connect(lambda i=i: self.arduino.send_serial_message(f'LED{i}'))
-            auto_hover_button.hoverLeave.connect(lambda i=i: self.arduino.send_serial_message(f'LED{i}'))
+            auto_hover_button.hoverEnter.connect(lambda i=i: self.arduino.send_serial_message(f'L{i-1}'))
+            auto_hover_button.hoverLeave.connect(lambda i=i: self.arduino.send_serial_message(f'l{i-1}'))
             
         self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.send_serial_message(RTI_RESET))
         self.ui.rti_reset_button.clicked.connect(self.reset_led_buttons)
@@ -108,6 +112,8 @@ class CustomMainWindow(QMainWindow):
             button_name = f'led_button_{i}'
             button = getattr(self, button_name)
             button.reset()  
+
+
 
 
 

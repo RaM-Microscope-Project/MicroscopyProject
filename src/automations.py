@@ -1,7 +1,10 @@
+from time import sleep
+
 class Automations:
 
-    def __init__(self):
-        pass
+    def __init__(self, arduino, camera):
+        self.arduino = arduino
+        self.camera = camera
 
     def RTI(self):
         print("RTI scan")
@@ -11,3 +14,5 @@ class Automations:
 
     def stereo_photography(self):
         print("stereo photography scan")
+
+

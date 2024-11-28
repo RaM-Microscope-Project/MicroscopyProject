@@ -32,5 +32,5 @@ class CameraControls:
         else:
             self.picam2.set_controls({setting: value1})
 
-    def capture_image(self):
-        self.picam2.capture_image("captures/rtiImage.jpg")
+
+
