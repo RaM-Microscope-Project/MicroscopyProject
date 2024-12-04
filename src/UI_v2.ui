@@ -249,6 +249,11 @@ QSlider::handle:horizontal {
              </property>
              <item>
               <widget class="QFrame" name="frame_11">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -260,7 +265,7 @@ QSlider::handle:horizontal {
                  <widget class="QLabel" name="label_2">
                   <property name="font">
                    <font>
-                    <pointsize>11</pointsize>
+                    <pointsize>12</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -352,7 +357,7 @@ QSlider::handle:horizontal {
                   </property>
                   <property name="font">
                    <font>
-                    <pointsize>11</pointsize>
+                    <pointsize>12</pointsize>
                     <weight>50</weight>
                     <bold>false</bold>
                    </font>
@@ -421,7 +426,7 @@ border-radius: 5px;</string>
               <widget class="QLabel" name="label">
                <property name="font">
                 <font>
-                 <pointsize>11</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -570,7 +575,7 @@ border-radius: 5px;</string>
                  <widget class="QLabel" name="label_3">
                   <property name="font">
                    <font>
-                    <pointsize>11</pointsize>
+                    <pointsize>12</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -987,7 +992,7 @@ border-radius: 5px;</string>
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>11</pointsize>
+                     <pointsize>12</pointsize>
                     </font>
                    </property>
                    <property name="styleSheet">
@@ -1097,7 +1102,7 @@ border-radius: 5px;</string>
                  <widget class="QLabel" name="label_4">
                   <property name="font">
                    <font>
-                    <pointsize>11</pointsize>
+                    <pointsize>12</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -1622,10 +1627,10 @@ border-radius: 5px;</string>
                <widget class="QFrame" name="scanFrame">
                 <property name="geometry">
                  <rect>
-                  <x>30</x>
-                  <y>600</y>
-                  <width>425</width>
-                  <height>150</height>
+                  <x>0</x>
+                  <y>620</y>
+                  <width>501</width>
+                  <height>121</height>
                  </rect>
                 </property>
                 <property name="sizePolicy">
@@ -1825,8 +1830,8 @@ border-radius: 10px;</string>
                 <widget class="QPushButton" name="scan_rti">
                  <property name="geometry">
                   <rect>
-                   <x>20</x>
-                   <y>80</y>
+                   <x>30</x>
+                   <y>60</y>
                    <width>111</width>
                    <height>41</height>
                   </rect>
@@ -1864,8 +1869,8 @@ border-radius: 5px;</string>
                 <widget class="QPushButton" name="scan_fs">
                  <property name="geometry">
                   <rect>
-                   <x>160</x>
-                   <y>80</y>
+                   <x>200</x>
+                   <y>60</y>
                    <width>111</width>
                    <height>41</height>
                   </rect>
@@ -1903,8 +1908,8 @@ border-radius: 5px;</string>
                 <widget class="QPushButton" name="scan_sp">
                  <property name="geometry">
                   <rect>
-                   <x>300</x>
-                   <y>80</y>
+                   <x>360</x>
+                   <y>60</y>
                    <width>111</width>
                    <height>41</height>
                   </rect>
@@ -1943,8 +1948,8 @@ border-radius: 5px;</string>
                  <property name="geometry">
                   <rect>
                    <x>30</x>
-                   <y>20</y>
-                   <width>371</width>
+                   <y>10</y>
+                   <width>441</width>
                    <height>31</height>
                   </rect>
                  </property>
