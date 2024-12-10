@@ -196,6 +196,16 @@ QSlider::handle:horizontal {
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QProgressBar" name="progressBar">
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="textVisible">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -2068,7 +2078,7 @@ border-radius: 10px;</string>
                   <number>2</number>
                  </property>
                  <property name="maximum">
-                  <number>20</number>
+                  <number>100</number>
                  </property>
                  <property name="value">
                   <number>10</number>
