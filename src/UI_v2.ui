@@ -1869,9 +1869,9 @@ border-radius: 5px;</string>
                 <widget class="QPushButton" name="scan_fs">
                  <property name="geometry">
                   <rect>
-                   <x>200</x>
+                   <x>160</x>
                    <y>60</y>
-                   <width>111</width>
+                   <width>181</width>
                    <height>41</height>
                   </rect>
                  </property>
@@ -1972,9 +1972,9 @@ border-radius: 10px;</string>
                 <widget class="QSpinBox" name="inputBox_SP">
                  <property name="geometry">
                   <rect>
-                   <x>360</x>
+                   <x>370</x>
                    <y>110</y>
-                   <width>111</width>
+                   <width>91</width>
                    <height>41</height>
                   </rect>
                  </property>
@@ -1992,7 +1992,7 @@ border-radius: 10px;</string>
                   <string> mm</string>
                  </property>
                  <property name="prefix">
-                  <string>Δ = </string>
+                  <string>Δ: </string>
                  </property>
                  <property name="minimum">
                   <number>1</number>
@@ -2000,13 +2000,16 @@ border-radius: 10px;</string>
                  <property name="maximum">
                   <number>65</number>
                  </property>
+                 <property name="value">
+                  <number>4</number>
+                 </property>
                 </widget>
-                <widget class="QSpinBox" name="inputBox_FS">
+                <widget class="QSpinBox" name="inputBox_FS_h">
                  <property name="geometry">
                   <rect>
-                   <x>200</x>
+                   <x>160</x>
                    <y>110</y>
-                   <width>111</width>
+                   <width>91</width>
                    <height>41</height>
                   </rect>
                  </property>
@@ -2024,13 +2027,86 @@ border-radius: 10px;</string>
                   <string> mm</string>
                  </property>
                  <property name="prefix">
-                  <string>H = </string>
+                  <string>H: </string>
                  </property>
                  <property name="minimum">
                   <number>1</number>
                  </property>
                  <property name="maximum">
                   <number>20</number>
+                 </property>
+                 <property name="value">
+                  <number>5</number>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="inputBox_FS_n">
+                 <property name="geometry">
+                  <rect>
+                   <x>250</x>
+                   <y>110</y>
+                   <width>91</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="wrapping">
+                  <bool>false</bool>
+                 </property>
+                 <property name="suffix">
+                  <string/>
+                 </property>
+                 <property name="prefix">
+                  <string> n: </string>
+                 </property>
+                 <property name="minimum">
+                  <number>2</number>
+                 </property>
+                 <property name="maximum">
+                  <number>20</number>
+                 </property>
+                 <property name="value">
+                  <number>10</number>
+                 </property>
+                </widget>
+                <widget class="QSpinBox" name="inputBox_RTI">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>110</y>
+                   <width>91</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="wrapping">
+                  <bool>false</bool>
+                 </property>
+                 <property name="suffix">
+                  <string> mm</string>
+                 </property>
+                 <property name="prefix">
+                  <string>B: </string>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>10</number>
+                 </property>
+                 <property name="value">
+                  <number>10</number>
                  </property>
                 </widget>
                </widget>
