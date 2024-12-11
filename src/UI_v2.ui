@@ -198,11 +198,23 @@ QSlider::handle:horizontal {
              </item>
              <item>
               <widget class="QProgressBar" name="progressBar">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>8</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                </font>
+               </property>
                <property name="value">
                 <number>0</number>
                </property>
                <property name="textVisible">
-                <bool>false</bool>
+                <bool>true</bool>
+               </property>
+               <property name="textDirection">
+                <enum>QProgressBar::TopToBottom</enum>
                </property>
               </widget>
              </item>
@@ -2043,7 +2055,7 @@ border-radius: 10px;</string>
                   <number>1</number>
                  </property>
                  <property name="maximum">
-                  <number>20</number>
+                  <number>50</number>
                  </property>
                  <property name="value">
                   <number>5</number>
@@ -2104,19 +2116,22 @@ border-radius: 10px;</string>
                   <bool>false</bool>
                  </property>
                  <property name="suffix">
-                  <string> mm</string>
+                  <string>%</string>
                  </property>
                  <property name="prefix">
                   <string>B: </string>
                  </property>
                  <property name="minimum">
-                  <number>1</number>
+                  <number>10</number>
                  </property>
                  <property name="maximum">
+                  <number>100</number>
+                 </property>
+                 <property name="singleStep">
                   <number>10</number>
                  </property>
                  <property name="value">
-                  <number>10</number>
+                  <number>100</number>
                  </property>
                 </widget>
                </widget>
