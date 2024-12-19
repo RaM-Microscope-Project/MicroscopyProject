@@ -1,25 +1,13 @@
 # Class created by MateiObrocea
 
-import os, sys, platform, threading
-from PyQt5 import QtCore, QtWidgets
-from time import sleep
-import asyncio
-
-
-# ----- Imports of the other classes -------------------------------------------
+import os
 from UI import Ui_MainWindow
+from PyQt5.QtWidgets import (QMainWindow)
 from custom_slider import CustomSlider
-from preview_window import PreviewWindow
+from hover_button import HoverButton
+from camera_widget import Camera_widget
 from camera_controls import CameraControls
 from arduino_controller import ArduinoController
-from hover_button import HoverButton
-#from protocol_constants import MOVE_STAGE_UP, MOVE_STAGE_DOWN, MOVE_STAGE_LEFT, MOVE_STAGE_RIGHT, STAGE_STOP, RTI_RESET
-from led_button_controller import LedButtonController
-from automations import Automations
-
-# ----- Camera imports ---------------------------------------------------------
-
-from PyQt5.QtWidgets import (QMainWindow, QApplication)
 
 
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = '/usr/lib/python3/dist-packages/PyQt5'
@@ -39,35 +27,40 @@ class CustomMainWindow(QMainWindow):
         self.arduino = ArduinoController()
         
      
-        self.initialize_camera_controls()
-        self.initialize_sliders()             
+        self.initialize_camera_controls()           
         self.initialize_stage_controls()
         self.initialize_led_buttons()
         self.initialize_scan_buttons()
+        self.ui.progressBar.hide()
         
-        self.automation = Automations(self.arduino, self.main_widget)
-
     def initialize_scan_buttons(self):
-        self.ui.scan_rti.pressed.connect(self.main_widget.init_RTI)
-        #self.ui.scan_sp.pressed.connect(self.stereo_photography)
-        #self.ui.scan_fs.pressed.connect(self.focus_stack)
+        self.ui.scan_rti.pressed.connect(self.camera_widget.init_RTI)
+        self.ui.scan_sp.pressed.connect(lambda: self.camera_widget.stereo_photography(1))
+        self.ui.scan_fs.pressed.connect(self.camera_widget.focus_stack)
 
         
     def initialize_camera_controls(self):
         self.camera_controls = CameraControls()
-        self.main_widget = PreviewWindow(self, self.camera_controls, self.arduino)
+        self.camera_widget = Camera_widget(self, self.camera_controls, self.arduino)
+        self.initialize_sliders()
+        self.ui.focus_button_min.pressed.connect(lambda: self.arduino.move_stage("Z-"))
+        self.ui.focus_button_plus.pressed.connect(lambda: self.arduino.move_stage("Z+"))
+        self.ui.focus_button_min.released.connect(lambda: self.arduino.move_stage("ZS"))
+        self.ui.focus_button_plus.released.connect(lambda: self.arduino.move_stage("ZS"))
+        self.ui.focus_button_auto.clicked.connect(lambda: self.camera_widget.test_focus())
+
 
     def initialize_stage_controls(self):
         self.ui.speed_slider.valueChanged.connect(self.arduino.set_speed)
-        self.ui.upArrow.pressed.connect(lambda: self.arduino.move_stage("Y"))
-        self.ui.upArrow.released.connect(lambda: self.arduino.move_stage("S"))
-        self.ui.leftArrow.pressed.connect(lambda: self.arduino.move_stage("x"))
-        self.ui.leftArrow.released.connect(lambda: self.arduino.move_stage("S"))
-        self.ui.downArrow.pressed.connect(lambda: self.arduino.move_stage("y"))
-        self.ui.downArrow.released.connect(lambda: self.arduino.move_stage("S"))
-        self.ui.rightArrow.pressed.connect(lambda: self.arduino.move_stage("X"))
-        self.ui.rightArrow.released.connect(lambda: self.arduino.move_stage("S"))
-        self.ui.stage_stop_button.clicked.connect(lambda: self.arduino.move_stage("C"))
+        self.ui.upArrow.pressed.connect(lambda: self.arduino.move_stage("Y+"))
+        self.ui.upArrow.released.connect(lambda: self.arduino.move_stage("YS"))
+        self.ui.leftArrow.pressed.connect(lambda: self.arduino.move_stage("X-"))
+        self.ui.leftArrow.released.connect(lambda: self.arduino.move_stage("XS"))
+        self.ui.downArrow.pressed.connect(lambda: self.arduino.move_stage("Y-"))
+        self.ui.downArrow.released.connect(lambda: self.arduino.move_stage("YS"))
+        self.ui.rightArrow.pressed.connect(lambda: self.arduino.move_stage("X+"))
+        self.ui.rightArrow.released.connect(lambda: self.arduino.move_stage("XS"))
+        self.ui.stage_stop_button.clicked.connect(lambda: self.arduino.move_stage("CAL"))
 
     def initialize_led_buttons(self):
         for i in range(1, 25):  # Assuming button names are from led_button_1 to led_button_25
@@ -77,10 +70,10 @@ class CustomMainWindow(QMainWindow):
             setattr(self, button_name, auto_hover_button)  # Replace the attribute in self with the new button
     
             # Connect hoverEnter and hoverLeave signals
-            auto_hover_button.hoverEnter.connect(lambda i=i: self.arduino.send_serial_message(f'L{i-1}'))
-            auto_hover_button.hoverLeave.connect(lambda i=i: self.arduino.send_serial_message(f'l{i-1}'))
+            auto_hover_button.hoverEnter.connect(lambda i=i: self.arduino.serial(f'LED1{i-1}'))
+            auto_hover_button.hoverLeave.connect(lambda i=i: self.arduino.serial(f'LED0{i-1}'))
             
-        self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.send_serial_message(RTI_RESET))
+        self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.serial(RTI_RESET))
         self.ui.rti_reset_button.clicked.connect(self.reset_led_buttons)
 
 

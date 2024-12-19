@@ -1,5 +1,5 @@
 import serial, time
-import protocol_constants as c
+
 
 class ArduinoController:
     """Controller class handling user input and updating the model."""
@@ -10,15 +10,18 @@ class ArduinoController:
             time.sleep(2)  # Give some time for the Arduino to initialize
         except Exception as e:
             print("Error: ", e)
+            self.serial_connection = serial.Serial('/dev/ttyAMA0', 115200)
 
     def set_speed(self, value):
-        self.send_serial_message(f"SPEED{value}")
+        #self.serial("blink")
+        self.serial(f"SPEED{value}")
+
 
     def move_stage(self, dir):
-        self.send_serial_message(dir)
+        self.serial(dir)
 
 
-    def send_serial_message(self, message):
+    def serial(self, message):
         print (message)
         """Send a serial message to the Arduino."""
         separated_message = message + "\n"
