@@ -190,13 +190,22 @@ class Camera_widget(QWidget):
         blur_value = round(numpy.std(cv2.Laplacian(img_center, cv2.CV_64F)), 2)
         self.arduino.serial(f"AF{blur_value}")
 
+        if blur_value > 8:
+            self.arduino.serial("AFF")
+            
         if self.count == n:
-            time.sleep(1)
-            self.count = 0
-            self.auto_focus = False
+            if blur_value < 5:
+                time.sleep(0.1)
+                print("autofocus failed, restarting...")
+
+            else:
+                time.sleep(0.1)
+                self.auto_focus = False
+                self.uiWindow.ui.progressBar.hide()
+
             self.arduino.serial("AFS")
+            self.count = 0
             self.uiWindow.ui.progressBar.setValue(0)
-            self.uiWindow.ui.progressBar.hide()
 
 
         
