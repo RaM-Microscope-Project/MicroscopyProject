@@ -54,11 +54,11 @@ class CustomMainWindow(QMainWindow):
         self.ui.speed_slider.valueChanged.connect(self.arduino.set_speed)
         self.ui.upArrow.pressed.connect(lambda: self.arduino.move_stage("Y+"))
         self.ui.upArrow.released.connect(lambda: self.arduino.move_stage("YS"))
-        self.ui.leftArrow.pressed.connect(lambda: self.arduino.move_stage("X-"))
+        self.ui.leftArrow.pressed.connect(lambda: self.arduino.move_stage("X+"))
         self.ui.leftArrow.released.connect(lambda: self.arduino.move_stage("XS"))
         self.ui.downArrow.pressed.connect(lambda: self.arduino.move_stage("Y-"))
         self.ui.downArrow.released.connect(lambda: self.arduino.move_stage("YS"))
-        self.ui.rightArrow.pressed.connect(lambda: self.arduino.move_stage("X+"))
+        self.ui.rightArrow.pressed.connect(lambda: self.arduino.move_stage("X-"))
         self.ui.rightArrow.released.connect(lambda: self.arduino.move_stage("XS"))
         self.ui.stage_stop_button.clicked.connect(lambda: self.arduino.move_stage("CAL"))
 
