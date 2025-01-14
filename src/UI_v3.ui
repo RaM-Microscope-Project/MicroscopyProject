@@ -1277,7 +1277,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button1">
+               <widget class="QPushButton" name="led_button_1">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1293,7 +1293,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button3">
+               <widget class="QPushButton" name="led_button_3">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1309,7 +1309,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button2">
+               <widget class="QPushButton" name="led_button_2">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1325,7 +1325,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button14">
+               <widget class="QPushButton" name="led_button_14">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1341,7 +1341,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button4">
+               <widget class="QPushButton" name="led_button_4">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1357,7 +1357,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button15">
+               <widget class="QPushButton" name="led_button_15">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1373,7 +1373,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button23">
+               <widget class="QPushButton" name="led_button_23">
                 <property name="geometry">
                  <rect>
                   <x>110</x>
@@ -1389,7 +1389,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button8">
+               <widget class="QPushButton" name="led_button_8">
                 <property name="geometry">
                  <rect>
                   <x>390</x>
@@ -1405,7 +1405,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button16">
+               <widget class="QPushButton" name="led_button_16">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1421,7 +1421,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button13">
+               <widget class="QPushButton" name="led_button_13">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1437,7 +1437,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button24">
+               <widget class="QPushButton" name="led_button_24">
                 <property name="geometry">
                  <rect>
                   <x>70</x>
@@ -1453,7 +1453,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button11">
+               <widget class="QPushButton" name="led_button_11">
                 <property name="geometry">
                  <rect>
                   <x>310</x>
@@ -1469,7 +1469,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button19">
+               <widget class="QPushButton" name="led_button_19">
                 <property name="geometry">
                  <rect>
                   <x>150</x>
@@ -1485,7 +1485,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button10">
+               <widget class="QPushButton" name="led_button_10">
                 <property name="geometry">
                  <rect>
                   <x>350</x>
@@ -1501,7 +1501,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button7">
+               <widget class="QPushButton" name="led_button_7">
                 <property name="geometry">
                  <rect>
                   <x>350</x>
@@ -1517,7 +1517,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button22">
+               <widget class="QPushButton" name="led_button_22">
                 <property name="geometry">
                  <rect>
                   <x>150</x>
@@ -1533,7 +1533,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button5">
+               <widget class="QPushButton" name="led_button_5">
                 <property name="geometry">
                  <rect>
                   <x>270</x>
@@ -1549,7 +1549,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button18">
+               <widget class="QPushButton" name="led_button_18">
                 <property name="geometry">
                  <rect>
                   <x>110</x>
@@ -1565,7 +1565,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button17">
+               <widget class="QPushButton" name="led_button_17">
                 <property name="geometry">
                  <rect>
                   <x>70</x>
@@ -1581,7 +1581,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button9">
+               <widget class="QPushButton" name="led_button_9">
                 <property name="geometry">
                  <rect>
                   <x>390</x>
@@ -1597,7 +1597,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button12">
+               <widget class="QPushButton" name="led_button_12">
                 <property name="geometry">
                  <rect>
                   <x>270</x>
@@ -1613,7 +1613,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button6">
+               <widget class="QPushButton" name="led_button_6">
                 <property name="geometry">
                  <rect>
                   <x>310</x>
@@ -1629,7 +1629,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button21">
+               <widget class="QPushButton" name="led_button_21">
                 <property name="geometry">
                  <rect>
                   <x>190</x>
@@ -1645,7 +1645,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button20">
+               <widget class="QPushButton" name="led_button_20">
                 <property name="geometry">
                  <rect>
                   <x>190</x>
