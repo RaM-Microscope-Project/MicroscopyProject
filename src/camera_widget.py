@@ -112,7 +112,7 @@ class Camera_widget(QWidget):
     def capture_RTI(self):
         self.uiWindow.ui.progressBar.show()
         self.uiWindow.ui.progressBar.setValue(int((self.count / 24) * 100))
-
+        time.sleep(0.1)
         self.arduino.serial(f'LED1{self.count}')
         time.sleep(0.1)
         cfg = self.camera_controls.picam2.create_still_configuration()

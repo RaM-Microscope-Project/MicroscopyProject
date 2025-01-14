@@ -175,7 +175,7 @@ QSlider::handle:horizontal {
                 </font>
                </property>
                <property name="text">
-                <string>RaM RTI Microscope Project UI v2</string>
+                <string>RaM RTI Microscope Project UI v3</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -487,6 +487,152 @@ border-radius: 5px;</string>
               </widget>
              </item>
              <item>
+              <widget class="QFrame" name="frame_14">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <widget class="QLabel" name="label_8">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>18</y>
+                  <width>232</width>
+                  <height>21</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Focus</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_12">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>45</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <widget class="QPushButton" name="focus_button_auto">
+                <property name="geometry">
+                 <rect>
+                  <x>60</x>
+                  <y>0</y>
+                  <width>111</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border: 3px solid #ffffff;  /* Border color */
+background-color: transparent;
+padding: 8px;
+border-radius: 5px;</string>
+                </property>
+                <property name="text">
+                 <string>Automatic</string>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+               <widget class="QPushButton" name="focus_button_min">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>0</y>
+                  <width>41</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border: 3px solid #ffffff;  /* Border color */
+background-color: transparent;
+padding: 8px;
+border-radius: 5px;</string>
+                </property>
+                <property name="text">
+                 <string>-</string>
+                </property>
+               </widget>
+               <widget class="QPushButton" name="focus_button_plus">
+                <property name="geometry">
+                 <rect>
+                  <x>180</x>
+                  <y>0</y>
+                  <width>41</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border: 3px solid #ffffff;  /* Border color */
+background-color: transparent;
+padding: 8px;
+border-radius: 5px;</string>
+                </property>
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </widget>
+             </item>
+             <item>
               <spacer name="verticalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -497,7 +643,7 @@ border-radius: 5px;</string>
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>40</width>
-                 <height>40</height>
+                 <height>20</height>
                 </size>
                </property>
               </spacer>
@@ -983,113 +1129,6 @@ border-radius: 5px;</string>
                   </layout>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QFrame" name="frame">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <widget class="QPushButton" name="focus_button_auto">
-                   <property name="geometry">
-                    <rect>
-                     <x>60</x>
-                     <y>30</y>
-                     <width>101</width>
-                     <height>41</height>
-                    </rect>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>12</pointsize>
-                    </font>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">border: 3px solid #ffffff;  /* Border color */
-background-color: transparent;
-padding: 8px;
-border-radius: 5px;</string>
-                   </property>
-                   <property name="text">
-                    <string>Autofocus</string>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                  <widget class="QPushButton" name="focus_button_min">
-                   <property name="geometry">
-                    <rect>
-                     <x>10</x>
-                     <y>30</y>
-                     <width>41</width>
-                     <height>41</height>
-                    </rect>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>12</pointsize>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">border: 3px solid #ffffff;  /* Border color */
-background-color: transparent;
-padding: 8px;
-border-radius: 5px;</string>
-                   </property>
-                   <property name="text">
-                    <string>-</string>
-                   </property>
-                  </widget>
-                  <widget class="QPushButton" name="focus_button_plus">
-                   <property name="geometry">
-                    <rect>
-                     <x>170</x>
-                     <y>30</y>
-                     <width>41</width>
-                     <height>41</height>
-                    </rect>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>12</pointsize>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">border: 3px solid #ffffff;  /* Border color */
-background-color: transparent;
-padding: 8px;
-border-radius: 5px;</string>
-                   </property>
-                   <property name="text">
-                    <string>+</string>
-                   </property>
-                  </widget>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>
@@ -1238,7 +1277,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_16">
+               <widget class="QPushButton" name="led_button_1">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1254,7 +1293,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_14">
+               <widget class="QPushButton" name="led_button_3">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1270,7 +1309,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_15">
+               <widget class="QPushButton" name="led_button_2">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1286,7 +1325,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_3">
+               <widget class="QPushButton" name="led_button_14">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1302,7 +1341,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_13">
+               <widget class="QPushButton" name="led_button_4">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1318,7 +1357,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_2">
+               <widget class="QPushButton" name="led_button_15">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1334,7 +1373,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_10">
+               <widget class="QPushButton" name="led_button_23">
                 <property name="geometry">
                  <rect>
                   <x>110</x>
@@ -1350,7 +1389,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_17">
+               <widget class="QPushButton" name="led_button_8">
                 <property name="geometry">
                  <rect>
                   <x>390</x>
@@ -1366,7 +1405,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_1">
+               <widget class="QPushButton" name="led_button_16">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1382,7 +1421,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_4">
+               <widget class="QPushButton" name="led_button_13">
                 <property name="geometry">
                  <rect>
                   <x>230</x>
@@ -1398,7 +1437,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_9">
+               <widget class="QPushButton" name="led_button_24">
                 <property name="geometry">
                  <rect>
                   <x>70</x>
@@ -1414,7 +1453,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_22">
+               <widget class="QPushButton" name="led_button_11">
                 <property name="geometry">
                  <rect>
                   <x>310</x>
@@ -1430,7 +1469,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_6">
+               <widget class="QPushButton" name="led_button_19">
                 <property name="geometry">
                  <rect>
                   <x>150</x>
@@ -1446,7 +1485,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_23">
+               <widget class="QPushButton" name="led_button_10">
                 <property name="geometry">
                  <rect>
                   <x>350</x>
@@ -1462,7 +1501,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_18">
+               <widget class="QPushButton" name="led_button_7">
                 <property name="geometry">
                  <rect>
                   <x>350</x>
@@ -1478,7 +1517,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_11">
+               <widget class="QPushButton" name="led_button_22">
                 <property name="geometry">
                  <rect>
                   <x>150</x>
@@ -1494,7 +1533,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_20">
+               <widget class="QPushButton" name="led_button_5">
                 <property name="geometry">
                  <rect>
                   <x>270</x>
@@ -1510,7 +1549,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_7">
+               <widget class="QPushButton" name="led_button_18">
                 <property name="geometry">
                  <rect>
                   <x>110</x>
@@ -1526,7 +1565,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_8">
+               <widget class="QPushButton" name="led_button_17">
                 <property name="geometry">
                  <rect>
                   <x>70</x>
@@ -1542,7 +1581,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_24">
+               <widget class="QPushButton" name="led_button_9">
                 <property name="geometry">
                  <rect>
                   <x>390</x>
@@ -1558,7 +1597,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_21">
+               <widget class="QPushButton" name="led_button_12">
                 <property name="geometry">
                  <rect>
                   <x>270</x>
@@ -1574,7 +1613,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_19">
+               <widget class="QPushButton" name="led_button_6">
                 <property name="geometry">
                  <rect>
                   <x>310</x>
@@ -1590,7 +1629,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_12">
+               <widget class="QPushButton" name="led_button_21">
                 <property name="geometry">
                  <rect>
                   <x>190</x>
@@ -1606,7 +1645,7 @@ color: #4CAF50;</string>
                  <string/>
                 </property>
                </widget>
-               <widget class="QPushButton" name="led_button_5">
+               <widget class="QPushButton" name="led_button_20">
                 <property name="geometry">
                  <rect>
                   <x>190</x>
