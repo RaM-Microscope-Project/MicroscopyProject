@@ -2,7 +2,7 @@
 This file contains the functions for the stepper control
 */
 
-void handleMotors() {
+void handleMotors() {//called every loop to move the motors
   if ((X_Motor.distanceToGo() == 0)
   && (Z_Motor.distanceToGo() == 0)
   && (Y_Motor.distanceToGo() == 0)) {
@@ -15,7 +15,9 @@ void handleMotors() {
   Z_Motor.run();
 }
 
-void calibrate() {
+void calibrate() {//the calibration sequence
+  //moves both axes one by one until the limit switch is pressed
+  
   init_steppers(1);
   Serial.println("Calibrating");
   delay(500);
@@ -54,7 +56,7 @@ void calibrate() {
 }
 
 
-void XY_Center() {
+void XY_Center() {//centers the XY stage
   digitalWrite(EN, LOW);
 
   X_Motor.moveTo(lim_X / 2);
@@ -67,7 +69,8 @@ void XY_Center() {
 }
 
 
-void stereoPhotography(int distance, bool number) {
+void stereoPhotography(int distance, bool number) {//Stereo photography function
+  //moves the XY stage a distance to the right and left for two captures
 
   if (!calibrated) {
     //calibrate();
@@ -83,13 +86,16 @@ void stereoPhotography(int distance, bool number) {
   digitalWrite(EN, HIGH);
 }
 
-void focusStack(float h) {
-  h *= 200;
+void focusStack(float h) {//focus stacking function
+  h *= 200; //this is the amount of steps per mm of the Z axis
   Serial.println(h);
   Z_Motor.move(-h);
 }
 
-void autoFocus(float blur) {
+void autoFocus(float blur) {//autofocus mode
+  //This function receives a blur value, if it is higher (sharper) than the previous it repeats the previous move direction and distance
+  //If it is lower, it moves the other way and halves the distance
+  
   digitalWrite(18, HIGH);
   if ((AF_counter == 0) && (blur < 2.5)){
     AF_steps *= 4;
@@ -106,8 +112,7 @@ if ((prev_blur - blur) > 0.10) {
   prev_blur = blur;
 }
 
-void init_steppers(float s) {
-  //set stepper values
+void init_steppers(float s) {//initialise all pins, motors, etc.
   X_Motor.setMaxSpeed(s * ms * motor_speed);
   X_Motor.setAcceleration(s * ms * motor_accel);
   X_Motor.setSpeed(s * ms * motor_accel);

@@ -1,24 +1,12 @@
 /*
   Arduino code for the Raspberry Pi RTI Microscope
+  Written for the Pi HAT PCB with Arduino Nano
 
-  Written by Ruben Koudijs
+  By Ruben Koudijs
 */
 
 #include <AccelStepper.h>
 #include <FastLED.h>
-
-// //pin numbers perfboard
-// #define EN 4
-// #define MS1 8
-// #define MS2 9
-// #define MS3 10
-// #define X_dir 12
-// #define Y_dir 3
-// #define Z_dir 6
-// #define X_step 11
-// #define Y_step 2
-// #define Z_step 5
-
 
 //pin numbers pcb
 #define LED_PIN 17
@@ -35,7 +23,7 @@
 #define Y_step 4
 #define Z_step 7
 
-//lighting constants
+//LED dome constants
 #define NUM_LEDS 24
 #define LED_TYPE WS2812B
 #define COLOR_ORDER GRB
@@ -46,10 +34,11 @@
 #define motor_accel 20000
 #define Z_motor_speed 500
 #define Z_motor_accel 10000
-#define lim_X 65000
-#define lim_Y 65000
+#define lim_X 64000
+#define lim_Y 64000
 #define lim_Z 100000
 
+//code values
 int AF_steps = 1000;
 int AF_fine_steps = 125;
 float speed = 1;
@@ -81,6 +70,8 @@ void loop() {
 }
 
 void fetchCommand() {
+  //this function checks the serial monitor and calls the executeCommand function when a message is recieved
+  
   if (Serial.available()) {
     String inputString = Serial.readStringUntil("/n");
     inputString.trim();
@@ -89,6 +80,10 @@ void fetchCommand() {
 }
 
 void executeCommand(String command) {
+  //This function recieves commands as a short string and uses if statements to call the appropriate control functions
+
+  //Movement controls:
+  
   if (command == "XS") {
     X_Motor.stop();
 
@@ -134,34 +129,18 @@ void executeCommand(String command) {
     digitalWrite(EN, LOW);
     Z_Motor.moveTo(0);
 
-  } else if (command == "Z remove") {
-    Z_Motor.setMaxSpeed(3 * Z_motor_speed);
-    digitalWrite(EN, LOW);
-    digitalWrite(18, HIGH);
-    Z_Motor.setSpeed(-1000);
-    while (true) {
-      Z_Motor.runSpeed();
-    }
-
-  } else if (command == "Z insert") {
-    Z_Motor.setMaxSpeed(3 * Z_motor_speed);
-    digitalWrite(EN, LOW);
-    digitalWrite(18, HIGH);
-    Z_Motor.setSpeed(1000);
-    while (true) {
-      Z_Motor.runSpeed();
-    }
-
-  } else if (command == "CAL") {
+//Automated features:
+    
+  } else if (command == "CAL") {//calibration sequence
     calibrate();
     calibrated = true;
 
-  } else if (command == "AFS") {
+  } else if (command == "AFS") {//stop autofocus mode
     AF_steps = 1000;
     AF_counter = 0;
     prev_blur = 0;
   
-  } else if (command == "AFF") {
+  } else if (command == "AFF") {//iteration of autofocus
     if (abs(AF_steps) > AF_fine_steps) {
       if (AF_steps < 0){
         AF_steps = - AF_fine_steps;
@@ -170,55 +149,74 @@ void executeCommand(String command) {
       }
     }
 
-  } else if (command.startsWith("AF")) {
+  } else if (command.startsWith("AF")) {//initiate autofocus mode
     command.remove(0,2);
     autoFocus(command.toFloat());
 
-  } else if (command.startsWith("LED1")) {
+  } else if (command.startsWith("LED1")) {//turn on a LED
     command.remove(0,4);
     setLED(command.toInt(), true);
 
-  } else if (command.startsWith("LED0")) {
+  } else if (command.startsWith("LED0")) {//turn off a LED
     command.remove(0,4);
     setLED(command.toInt(), false);
 
-  } else if (command.startsWith("SPEED")) {
+  } else if (command.startsWith("SPEED")) {//change speed setting
     command.remove(0,5);
     speed = 1/pow(2, command.toInt());
     Serial.print(" speed: ");
     Serial.println(speed);
     init_steppers(speed);
 
-  } else if (command.startsWith("SP1")) {
+  } else if (command.startsWith("SP1")) {//first stereo photography capture
     command.remove(0,3);
-    int distance = - (lim_X / 65) * command.toInt();
+    int distance = - (lim_X / 20) * command.toInt();
     stereoPhotography(distance, false);
 
-  } else if (command.startsWith("SP2")) {
+  } else if (command.startsWith("SP2")) {//second stereo photography capture
     command.remove(0,3);
-    int distance = 2 * (lim_X / 65) * command.toInt();
+    int distance = 2 * (lim_X / 20) * command.toInt();
     stereoPhotography(distance, true);
     
-  } else if (command.startsWith("FS")){
+  } else if (command.startsWith("FS")){//focus stacking
     command.remove(0,2);
     focusStack(command.toFloat());
 
-  } else if (command.startsWith("LED_B")) {
+  } else if (command.startsWith("LED_B")) {//change brightness of LEDs
     command.remove(0,5);
     LED_b = command.toInt();
     init_leds();
 
-  } else if (command.startsWith("LED_C")) {
+//Testing, debugging:
+  } else if (command == "Z remove") {//remove the lens arm
+    Z_Motor.setMaxSpeed(3 * Z_motor_speed);
+    digitalWrite(EN, LOW);
+    digitalWrite(18, HIGH);
+    Z_Motor.setSpeed(-1000);
+    while (true) {
+      Z_Motor.runSpeed();
+    }
+
+  } else if (command == "Z insert") {//instert the lens arm
+    Z_Motor.setMaxSpeed(3 * Z_motor_speed);
+    digitalWrite(EN, LOW);
+    digitalWrite(18, HIGH);
+    Z_Motor.setSpeed(1000);
+    while (true) {
+      Z_Motor.runSpeed();
+    }
+
+  } else if (command.startsWith("LED_C")) {//change the RTI LED color
     command.remove(0,5);
     LED_c[0] = command.substring(0,3).toInt();
     LED_c[1] = command.substring(3,6).toInt();
     LED_c[2] = command.substring(6,9).toInt();
     init_leds();
 
-  } else if (command == "test LED"){
+  } else if (command == "test LED"){//test the RTI dome
     test_leds();
 
-  } else if (command == "blink") {
+  } else if (command == "blink") {//test the serial communication
     while (1) {
       digitalWrite(LED_BUILTIN, HIGH);
       delay(1000);
