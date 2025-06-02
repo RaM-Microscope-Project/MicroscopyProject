@@ -43,24 +43,24 @@ class CustomMainWindow(QMainWindow):
         self.camera_controls = CameraControls()
         self.camera_widget = Camera_widget(self, self.camera_controls, self.arduino)
         self.initialize_sliders()
-        self.ui.focus_button_min.pressed.connect(lambda: self.arduino.move_stage("Z-"))
-        self.ui.focus_button_plus.pressed.connect(lambda: self.arduino.move_stage("Z+"))
-        self.ui.focus_button_min.released.connect(lambda: self.arduino.move_stage("ZS"))
-        self.ui.focus_button_plus.released.connect(lambda: self.arduino.move_stage("ZS"))
+        self.ui.focus_button_min.pressed.connect(lambda: self.arduino.serial("Z-"))
+        self.ui.focus_button_plus.pressed.connect(lambda: self.arduino.serial("Z+"))
+        self.ui.focus_button_min.released.connect(lambda: self.arduino.serial("ZS"))
+        self.ui.focus_button_plus.released.connect(lambda: self.arduino.serial("ZS"))
         self.ui.focus_button_auto.clicked.connect(lambda: self.camera_widget.test_focus())
 
 
     def initialize_stage_controls(self):
         self.ui.speed_slider.valueChanged.connect(self.arduino.set_speed)
-        self.ui.upArrow.pressed.connect(lambda: self.arduino.move_stage("Y+"))
-        self.ui.upArrow.released.connect(lambda: self.arduino.move_stage("YS"))
-        self.ui.leftArrow.pressed.connect(lambda: self.arduino.move_stage("X+"))
-        self.ui.leftArrow.released.connect(lambda: self.arduino.move_stage("XS"))
-        self.ui.downArrow.pressed.connect(lambda: self.arduino.move_stage("Y-"))
-        self.ui.downArrow.released.connect(lambda: self.arduino.move_stage("YS"))
-        self.ui.rightArrow.pressed.connect(lambda: self.arduino.move_stage("X-"))
-        self.ui.rightArrow.released.connect(lambda: self.arduino.move_stage("XS"))
-        self.ui.stage_stop_button.clicked.connect(lambda: self.arduino.move_stage("CAL"))
+        self.ui.upArrow.pressed.connect(lambda: self.arduino.serial("Y+"))
+        self.ui.upArrow.released.connect(lambda: self.arduino.serial("YS"))
+        self.ui.leftArrow.pressed.connect(lambda: self.arduino.serial("X+"))
+        self.ui.leftArrow.released.connect(lambda: self.arduino.serial("XS"))
+        self.ui.downArrow.pressed.connect(lambda: self.arduino.serial("Y-"))
+        self.ui.downArrow.released.connect(lambda: self.arduino.serial("YS"))
+        self.ui.rightArrow.pressed.connect(lambda: self.arduino.serial("X-"))
+        self.ui.rightArrow.released.connect(lambda: self.arduino.serial("XS"))
+        self.ui.stage_stop_button.clicked.connect(lambda: self.arduino.serial("CAL"))
 
     def initialize_led_buttons(self):
         for i in range(1, 25):  # Assuming button names are from led_button_1 to led_button_25
@@ -73,7 +73,7 @@ class CustomMainWindow(QMainWindow):
             auto_hover_button.hoverEnter.connect(lambda i=i: self.arduino.serial(f'LED1{i-1}'))
             auto_hover_button.hoverLeave.connect(lambda i=i: self.arduino.serial(f'LED0{i-1}'))
             
-        self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.serial(RTI_RESET))
+        self.ui.rti_reset_button.clicked.connect(lambda: self.arduino.serial("RTI_RESET"))
         self.ui.rti_reset_button.clicked.connect(self.reset_led_buttons)
 
 

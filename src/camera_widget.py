@@ -61,7 +61,7 @@ class Camera_widget(QWidget):
         self.btnChildCapture.setEnabled(False)
         cfg = self.camera_controls.picam2.create_still_configuration()
         timeStamp = time.strftime("%Y%m%d-%H%M%S")
-        targetPath="/home/xxpepxx/Desktop/GitProject/MicroscopyProject/src/captures/img_"+timeStamp+".jpg"
+        targetPath="/home/microscopy/Desktop/img_"+timeStamp+".jpg"
         print("- Capture image:", targetPath)
         self.camera_controls.picam2.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
 
@@ -104,7 +104,7 @@ class Camera_widget(QWidget):
     def init_RTI(self):
         self.arduino.serial(f'LED_B{self.uiWindow.ui.inputBox_RTI.value()}')
         self.timeStamp = time.strftime("%d.%m.%Y-%H:%M:%S")
-        mkdir(f"/home/xxpepxx/Desktop/GitProject/MicroscopyProject/src/captures/RTI_SCAN_{self.timeStamp}")
+        mkdir(f"/home/microscopy/Desktop/RTI_SCAN_{self.timeStamp}")
         self.capturing_RTI = True
         self.count = 0
         self.capture_RTI()
@@ -118,7 +118,7 @@ class Camera_widget(QWidget):
         time.sleep(0.1)
         #capture an image
         cfg = self.camera_controls.picam2.create_still_configuration()
-        targetPath=f"/home/xxpepxx/Desktop/GitProject/MicroscopyProject/src/captures/RTI_SCAN_{self.timeStamp}/img_{self.count}.jpg"
+        targetPath=f"/home/microscopy/Desktop/RTI_SCAN_{self.timeStamp}/img_{self.count}.jpg"
         print("- Capture image:", targetPath)
         self.camera_controls.picam2.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
 
