@@ -6,7 +6,8 @@
 */
 
 #include <AccelStepper.h>
-#include <FastLED.h>
+// #include <FastLED.h>
+#include <Adafruit_NeoPixel.h>
 
 //pin numbers pcb
 #define LED_PIN 17
@@ -49,7 +50,7 @@ byte LED_c[] = {255, 255, 80};
 bool calibrated = false;
 
 //initialise leds
-CRGB leds[NUM_LEDS];
+Adafruit_NeoPixel led_strip = Adafruit_NeoPixel(LED_COUNT, PIN, NEO_RGBW + NEO_KHZ800);
 
 //initialise steppers
 AccelStepper X_Motor(1, X_dir, X_step);
@@ -61,7 +62,8 @@ void setup() {
   Serial.begin(115200);
   Serial.setTimeout(10);
   init_steppers(speed);
-  init_leds();
+  // init_leds();
+  led_strip.begin();
 }
 
 void loop() {
