@@ -5,12 +5,12 @@ This file contains the functions for the LED control
 
 void setLED(byte LED, bool state) {//turn a LED on or off
   if (state) {
-    strip.setPixelColor(LED, strip.Color(0, 0, 0, 255)); // Full white (W channel)
+    led_strip.setPixelColor(LED, led_strip.Color(0, 0, 0, 255)); // Full white (W channel)
     // leds[LED] = CRGB(LED_c[0], LED_c[1], LED_c[2]);
   } else {
-    strip.setPixelColor(LED, strip.Color(0, 0, 0, 0)); // Full white (W channel)
+    led_strip.setPixelColor(LED, led_strip.Color(0, 0, 0, 0)); // Full white (W channel)
   }
-  FastLED.show();
+  led_strip.show();
 }
 
 

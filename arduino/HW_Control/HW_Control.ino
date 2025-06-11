@@ -50,7 +50,7 @@ byte LED_c[] = {255, 255, 80};
 bool calibrated = false;
 
 //initialise leds
-Adafruit_NeoPixel led_strip = Adafruit_NeoPixel(LED_COUNT, PIN, NEO_RGBW + NEO_KHZ800);
+Adafruit_NeoPixel led_strip = Adafruit_NeoPixel(NUM_LEDS, LED_PIN, NEO_RGBW + NEO_KHZ800);
 
 //initialise steppers
 AccelStepper X_Motor(1, X_dir, X_step);
@@ -187,7 +187,7 @@ void executeCommand(String command) {
   } else if (command.startsWith("LED_B")) {//change brightness of LEDs
     command.remove(0,5);
     LED_b = command.toInt();
-    init_leds();
+    // init_leds();
 
 //Testing, debugging:
   } else if (command == "Z remove") {//remove the lens arm
@@ -213,7 +213,7 @@ void executeCommand(String command) {
     LED_c[0] = command.substring(0,3).toInt();
     LED_c[1] = command.substring(3,6).toInt();
     LED_c[2] = command.substring(6,9).toInt();
-    init_leds();
+    // init_leds();
 
   } else if (command == "test LED"){//test the RTI dome
     test_leds();
