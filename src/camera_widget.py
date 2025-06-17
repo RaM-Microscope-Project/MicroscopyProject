@@ -61,7 +61,7 @@ class Camera_widget(QWidget):
         self.btnChildCapture.setEnabled(False)
         cfg = self.camera_controls.picam2.create_still_configuration()
         timeStamp = time.strftime("%Y%m%d-%H%M%S")
-        targetPath="/home/microscopy/Desktop/img_"+timeStamp+".jpg"
+        targetPath="/home/microscopi/Desktop/img_"+timeStamp+".jpg"
         print("- Capture image:", targetPath)
         self.camera_controls.picam2.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
 
@@ -104,7 +104,7 @@ class Camera_widget(QWidget):
     def init_RTI(self):
         self.arduino.serial(f'LED_B{self.uiWindow.ui.inputBox_RTI.value()}')
         self.timeStamp = time.strftime("%d.%m.%Y-%H:%M:%S")
-        mkdir(f"/home/microscopy/Desktop/RTI_SCAN_{self.timeStamp}")
+        mkdir(f"/home/microscopi/Desktop/RTI_SCAN_{self.timeStamp}")
         self.capturing_RTI = True
         self.count = 0
         self.capture_RTI()
@@ -118,7 +118,7 @@ class Camera_widget(QWidget):
         time.sleep(0.1)
         #capture an image
         cfg = self.camera_controls.picam2.create_still_configuration()
-        targetPath=f"/home/microscopy/Desktop/RTI_SCAN_{self.timeStamp}/img_{self.count}.jpg"
+        targetPath=f"/home/microscopi/Desktop/RTI_SCAN_{self.timeStamp}/img_{self.count}.jpg"
         print("- Capture image:", targetPath)
         self.camera_controls.picam2.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
 
@@ -126,7 +126,7 @@ class Camera_widget(QWidget):
     def stereo_photography(self, number):
         if (number == 1):#make the directory first time this function is called
             self.timeStamp = time.strftime("%d.%m.%Y-%H:%M:%S")
-            mkdir(f"/home/xxpepxx/Desktop/GitProject/MicroscopyProject/src/captures/SP_SCAN_{self.timeStamp}")
+            mkdir(f"/home/microscopi/Desktop/SP_SCAN_{self.timeStamp}")
 
         delta = self.uiWindow.ui.inputBox_SP.value()
         self.arduino.serial(f'SP{number}{delta}')
@@ -136,7 +136,7 @@ class Camera_widget(QWidget):
 
         #capture an image
         cfg = self.camera_controls.picam2.create_still_configuration()
-        targetPath=f"/home/xxpepxx/Desktop/GitProject/MicroscopyProject/src/captures/SP_SCAN_{self.timeStamp}/img_{number}_{delta}mm.jpg"
+        targetPath=f"/home/microscopi/Desktop/SP_SCAN_{self.timeStamp}/img_{number}_{delta}mm.jpg"
         print("- Capture image:", targetPath)
         self.camera_controls.picam2.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
 
@@ -152,12 +152,12 @@ class Camera_widget(QWidget):
         if self.count == 0:#make the directory first time this function is called
             #self.arduino.serial(f'Z0')
             self.timeStamp = time.strftime("%d.%m.%Y-%H:%M:%S")
-            mkdir(f"/home/xxpepxx/Desktop/GitProject/MicroscopyProject/src/captures/FS_SCAN_{self.timeStamp}")
+            mkdir(f"/home/microscopi/Desktop/FS_SCAN_{self.timeStamp}")
             time.sleep(5)
 
         #capture an image
         cfg = self.camera_controls.picam2.create_still_configuration()
-        targetPath=f"/home/xxpepxx/Desktop/GitProject/MicroscopyProject/src/captures/FS_SCAN_{self.timeStamp}/img_{self.count + 1}_{delta}mm.jpg"
+        targetPath=f"/home/microscopi/Desktop/FS_SCAN_{self.timeStamp}/img_{self.count + 1}_{delta}mm.jpg"
         print("- Capture image:", targetPath)
         self.camera_controls.picam2.switch_mode_and_capture_file(cfg, targetPath, signal_function=self.qpicamera2.signal_done)
 
