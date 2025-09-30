@@ -9,7 +9,8 @@ class ArduinoController:
             time.sleep(2)  # Give some time for the Arduino to initialize
         except Exception as e:
             print("Error: ", e)
-            self.serial_connection = serial.Serial('/dev/ttyAMA0', 115200)#connect through UART
+            self.serial_connection = serial.Serial('/dev/serial0', 115200)#connect through UART (try also ttyAMA0)(ttyAMA10) it should be the same or
+            time.sleep(2)  # Give some time for the Arduino to initialize
 
     def set_speed(self, value):
         self.serial(f"SPEED{value}")
