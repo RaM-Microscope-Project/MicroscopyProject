@@ -5,6 +5,9 @@ from os import mkdir
 import time
 import cv2
 import numpy
+import os
+import subprocess
+from pathlib import Path
 
 class Camera_widget(QWidget):
 
@@ -15,6 +18,31 @@ class Camera_widget(QWidget):
         def __init__(self, subLayout):
             super(QWidget, self).__init__()
             self.setLayout(subLayout)
+            self.target_path=self.get_target_path()
+            print(self.target_path)
+
+
+    def get_target_path(self):
+        """Return the absolute path to the user's Desktop directory,
+        independent of username or system language."""
+        try:
+            # Try to get the localized Desktop path using xdg-user-dir
+            desktop_path = subprocess.run(
+                ["xdg-user-dir", "DESKTOP"],
+                capture_output=True,
+                text=True,
+                check=True
+            ).stdout.strip()
+
+            # If the result is empty, fall back
+            if not desktop_path:
+                raise ValueError("xdg-user-dir returned empty path")
+
+        except Exception:
+            # Fallback to the standard Desktop folder in the user's home
+            desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+
+        return Path(desktop_path)
 
     def __init__(self, parent, camera_controls, arduino):
         super(QWidget, self).__init__(parent)
