@@ -1,5 +1,3 @@
-# Class created by MateiObrocea
-
 import os
 from UI import Ui_MainWindow
 from PyQt5.QtWidgets import (QMainWindow)
@@ -10,6 +8,7 @@ from camera_controls import CameraControls
 from arduino_controller import ArduinoController
 
 
+# Set environment variables required for PyQt5 to run correctly
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = '/usr/lib/python3/dist-packages/PyQt5'
 os.environ['DISPLAY'] = ':0'
 
@@ -24,25 +23,33 @@ class CustomMainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.arduino = ArduinoController()
-        
-     
-        self.initialize_camera_controls()           
+        self.arduino = ArduinoController() # Initialize Arduino controller for hardware communication
+
+        # Initialize UI sections and related functionality
+        self.initialize_camera_controls()
         self.initialize_stage_controls()
         self.initialize_led_buttons()
         self.initialize_scan_buttons()
+
+        # Hide the progress bar by default
         self.ui.progressBar.hide()
         
     def initialize_scan_buttons(self):
+        # Connect scan buttons to corresponding camera widget functions
         self.ui.scan_rti.pressed.connect(self.camera_widget.init_RTI)
         self.ui.scan_sp.pressed.connect(lambda: self.camera_widget.stereo_photography(1))
         self.ui.scan_fs.pressed.connect(self.camera_widget.focus_stack)
 
         
     def initialize_camera_controls(self):
+        # Initialize camera control and camera widget
         self.camera_controls = CameraControls()
         self.camera_widget = Camera_widget(self, self.camera_controls, self.arduino)
+
+        # Initialize sliders that control camera parameters
         self.initialize_sliders()
+
+        # Connect focus control buttons to Arduino commands
         self.ui.focus_button_min.pressed.connect(lambda: self.arduino.serial("Z-"))
         self.ui.focus_button_plus.pressed.connect(lambda: self.arduino.serial("Z+"))
         self.ui.focus_button_min.released.connect(lambda: self.arduino.serial("ZS"))
@@ -51,6 +58,7 @@ class CustomMainWindow(QMainWindow):
 
 
     def initialize_stage_controls(self):
+        # Connect stage movement controls to Arduino commands
         self.ui.speed_slider.valueChanged.connect(self.arduino.set_speed)
         self.ui.upArrow.pressed.connect(lambda: self.arduino.serial("Y-"))
         self.ui.upArrow.released.connect(lambda: self.arduino.serial("YS"))
@@ -60,10 +68,12 @@ class CustomMainWindow(QMainWindow):
         self.ui.downArrow.released.connect(lambda: self.arduino.serial("YS"))
         self.ui.rightArrow.pressed.connect(lambda: self.arduino.serial("X+"))
         self.ui.rightArrow.released.connect(lambda: self.arduino.serial("XS"))
+
+        # Calibrate stage movement
         self.ui.stage_stop_button.clicked.connect(lambda: self.arduino.serial("CAL"))
 
     def initialize_led_buttons(self):
-        for i in range(1, 25):  # Assuming button names are from led_button_1 to led_button_25
+        for i in range(1, 25):         # Assuming button names are from led_button_1 to led_button_25
             button_name = f'led_button_{i}'
             button = getattr(self.ui, button_name)  # Get the button by name from the UI
             auto_hover_button = HoverButton.replace_with_auto_hover(button)
@@ -105,15 +115,3 @@ class CustomMainWindow(QMainWindow):
             button_name = f'led_button_{i}'
             button = getattr(self, button_name)
             button.reset()  
-
-
-
-
-
-
-        
-
-
-    
-    
-    
