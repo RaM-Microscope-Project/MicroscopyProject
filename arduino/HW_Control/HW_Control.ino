@@ -69,7 +69,7 @@ void loop() {
 
 void fetchCommand() {
   //this function checks the serial monitor and calls the executeCommand function when a message is recieved
-  
+
   if (Serial.available()) {
     String inputString = Serial.readStringUntil("/n");
     inputString.trim();
@@ -81,7 +81,7 @@ void executeCommand(String command) {
   //This function recieves commands as a short string and uses if statements to call the appropriate control functions
 
   //Movement controls:
-  
+
   if (command == "XS") {
     X_Motor.stop();
 
@@ -121,100 +121,103 @@ void executeCommand(String command) {
 
   } else if (command == "Z-") {
     digitalWrite(18, HIGH);
-    Z_Motor.moveTo(- lim_Z);
+    Z_Motor.moveTo(-lim_Z);
 
   } else if (command == "Z0") {
     digitalWrite(EN, LOW);
     Z_Motor.moveTo(0);
 
-//Automated features:
-    
-  } else if (command == "CAL") {//calibration sequence
+    //Automated features:
+
+  } else if (command == "CAL") {  //calibration sequence
     calibrate();
     calibrated = true;
 
-  } else if (command == "AFS") {//stop autofocus mode
+  } else if (command == "AFS") {  //stop autofocus mode
     AF_steps = 1000;
     AF_counter = 0;
     prev_blur = 0;
-  
-  } else if (command == "AFF") {//iteration of autofocus
+
+  } else if (command == "AFF") {  //iteration of autofocus
     if (abs(AF_steps) > AF_fine_steps) {
-      if (AF_steps < 0){
-        AF_steps = - AF_fine_steps;
+      if (AF_steps < 0) {
+        AF_steps = -AF_fine_steps;
       } else {
         AF_steps = AF_fine_steps;
       }
     }
 
-  } else if (command.startsWith("AF")) {//initiate autofocus mode
-    command.remove(0,2);
+  } else if (command.startsWith("AF")) {  //initiate autofocus mode
+    command.remove(0, 2);
     autoFocus(command.toFloat());
 
-  } else if (command.startsWith("LED1")) {//turn on a LED
-    command.remove(0,4);
+  } else if (command.startsWith("LED1")) {  //turn on a LED
+    command.remove(0, 4);
     setLED(command.toInt(), true);
 
-  } else if (command.startsWith("LED0")) {//turn off a LED
-    command.remove(0,4);
+  } else if (command.startsWith("LED0")) {  //turn off a LED
+    command.remove(0, 4);
     setLED(command.toInt(), false);
 
-  } else if (command.startsWith("SPEED")) {//change speed setting
-    command.remove(0,5);
-    speed = 1/pow(2, command.toInt());
+  } else if (command.startsWith("SPEED")) {  //change speed setting
+    command.remove(0, 5);
+    speed = 1 / pow(2, command.toInt());
     Serial.print(" speed: ");
     Serial.println(speed);
     init_steppers(speed);
 
-  } else if (command.startsWith("SP1")) {//first stereo photography capture
-    command.remove(0,3);
-    int distance = - (lim_X / 20) * command.toInt();
+  } else if (command.startsWith("SP1")) {  //first stereo photography capture
+    command.remove(0, 3);
+    int distance = -(lim_X / 20) * command.toInt();
     stereoPhotography(distance, false);
 
-  } else if (command.startsWith("SP2")) {//second stereo photography capture
-    command.remove(0,3);
+  } else if (command.startsWith("SP2")) {  //second stereo photography capture
+    command.remove(0, 3);
     int distance = 2 * (lim_X / 20) * command.toInt();
     stereoPhotography(distance, true);
-    
-  } else if (command.startsWith("FS")){//focus stacking
-    command.remove(0,2);
+
+  } else if (command.startsWith("FS")) {  //focus stacking
+    command.remove(0, 2);
     focusStack(command.toFloat());
 
-  } else if (command.startsWith("LED_B")) {//change brightness of LEDs
-    command.remove(0,5);
+  } else if (command.startsWith("LED_B")) {  //change brightness of LEDs
+    command.remove(0, 5);
     led_strip.setBrightness(command.toInt());
-    led_strip.show(); // optional, but recommended if leds already lit
-
-//Testing, debugging:
-  } else if (command == "Z remove") {//remove the lens arm
-    Z_Motor.setMaxSpeed(3 * Z_motor_speed);
-    digitalWrite(EN, LOW);
-    digitalWrite(18, HIGH);
-    Z_Motor.setSpeed(-1000);
-    while (true) {
-      Z_Motor.runSpeed();
-    }
-
-  } else if (command == "Z insert") {//instert the lens arm
-    Z_Motor.setMaxSpeed(3 * Z_motor_speed);
-    digitalWrite(EN, LOW);
-    digitalWrite(18, HIGH);
-    Z_Motor.setSpeed(1000);
-    while (true) {
-      Z_Motor.runSpeed();
-    }
-
-  } else if (command == "test LED"){//test the RTI dome
-    test_leds();
-
-  } else if (command == "blink") {//test the serial communication
-    while (1) {
-      digitalWrite(LED_BUILTIN, HIGH);
-      delay(1000);
-      digitalWrite(LED_BUILTIN, LOW);
-      delay(1000);
+    led_strip.show();  // optional, but recommended if leds already lit
+  }else if (command.startsWith("RTI_RESET"){
+    for (byte i = 0; i < NUM_LEDS; i++) {
+      setLED(i, false);
     }
   }
+  //Testing, debugging:
 }
-
-
+else if (command == "Z remove") {  //remove the lens arm
+  Z_Motor.setMaxSpeed(3 * Z_motor_speed);
+  digitalWrite(EN, LOW);
+  digitalWrite(18, HIGH);
+  Z_Motor.setSpeed(-1000);
+  while (true) {
+    Z_Motor.runSpeed();
+  }
+}
+else if (command == "Z insert") {  //instert the lens arm
+  Z_Motor.setMaxSpeed(3 * Z_motor_speed);
+  digitalWrite(EN, LOW);
+  digitalWrite(18, HIGH);
+  Z_Motor.setSpeed(1000);
+  while (true) {
+    Z_Motor.runSpeed();
+  }
+}
+else if (command == "test LED") {  //test the RTI dome
+  test_leds();
+}
+else if (command == "blink") {  //test the serial communication
+  while (1) {
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(1000);
+  }
+}
+}
