@@ -6,7 +6,6 @@
 */
 
 #include <AccelStepper.h>
-// #include <FastLED.h>
 #include <Adafruit_NeoPixel.h>
 
 //pin numbers pcb
@@ -45,8 +44,6 @@ int AF_fine_steps = 125;
 float speed = 1;
 float prev_blur = 0;
 byte AF_counter = 0;
-byte LED_b = 255;
-byte LED_c[] = {255, 255, 80};
 bool calibrated = false;
 
 //initialise leds
@@ -62,8 +59,7 @@ void setup() {
   Serial.begin(115200);
   Serial.setTimeout(10);
   init_steppers(speed);
-  // init_leds();
-  led_strip.begin();
+  init_leds();
 }
 
 void loop() {
@@ -186,8 +182,8 @@ void executeCommand(String command) {
 
   } else if (command.startsWith("LED_B")) {//change brightness of LEDs
     command.remove(0,5);
-    LED_b = command.toInt();
-    // init_leds();
+    led_strip.setBrightness(command.toInt());
+    led_strip.show(); // optional, but recommended if leds already lit
 
 //Testing, debugging:
   } else if (command == "Z remove") {//remove the lens arm
@@ -207,13 +203,6 @@ void executeCommand(String command) {
     while (true) {
       Z_Motor.runSpeed();
     }
-
-  } else if (command.startsWith("LED_C")) {//change the RTI LED color
-    command.remove(0,5);
-    LED_c[0] = command.substring(0,3).toInt();
-    LED_c[1] = command.substring(3,6).toInt();
-    LED_c[2] = command.substring(6,9).toInt();
-    // init_leds();
 
   } else if (command == "test LED"){//test the RTI dome
     test_leds();
