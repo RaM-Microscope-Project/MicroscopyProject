@@ -5,8 +5,8 @@
   By Ruben Koudijs
 */
 
-#include <AccelStepper.h>
-#include <Adafruit_NeoPixel.h>
+#include <AccelStepper.h>       //accelstepper by mike mccauley
+#include <Adafruit_NeoPixel.h>  //Adafruit neopixel by adafruit
 
 //pin numbers pcb
 #define LED_PIN 17
@@ -45,6 +45,8 @@ float speed = 1;
 float prev_blur = 0;
 byte AF_counter = 0;
 bool calibrated = false;
+
+int LED_b = 255;
 
 //initialise leds
 Adafruit_NeoPixel led_strip = Adafruit_NeoPixel(NUM_LEDS, LED_PIN, NEO_RGBW + NEO_KHZ800);
@@ -182,42 +184,37 @@ void executeCommand(String command) {
 
   } else if (command.startsWith("LED_B")) {  //change brightness of LEDs
     command.remove(0, 5);
-    led_strip.setBrightness(command.toInt());
+    LED_b = command.toInt();
+    led_strip.setBrightness(LED_b);
     led_strip.show();  // optional, but recommended if leds already lit
-  }else if (command.startsWith("RTI_RESET"){
+  }else if (command.startsWith("RTI_RESET")){
     for (byte i = 0; i < NUM_LEDS; i++) {
       setLED(i, false);
     }
+  } else if (command == "Z remove") {  //remove the lens arm
+    Z_Motor.setMaxSpeed(3 * Z_motor_speed);
+    digitalWrite(EN, LOW);
+    digitalWrite(18, HIGH);
+    Z_Motor.setSpeed(-1000);
+    while (true) {
+      Z_Motor.runSpeed();
+    }
+  } else if (command == "Z insert") {  //instert the lens arm
+    Z_Motor.setMaxSpeed(3 * Z_motor_speed);
+    digitalWrite(EN, LOW);
+    digitalWrite(18, HIGH);
+    Z_Motor.setSpeed(1000);
+    while (true) {
+      Z_Motor.runSpeed();
+    }
+  } else if (command == "test LED") {  //test the RTI dome
+    test_leds();
+  } else if (command == "blink") {  //test the serial communication
+    while (1) {
+      digitalWrite(LED_BUILTIN, HIGH);
+      delay(1000);
+      digitalWrite(LED_BUILTIN, LOW);
+      delay(1000);
+    }
   }
-  //Testing, debugging:
-}
-else if (command == "Z remove") {  //remove the lens arm
-  Z_Motor.setMaxSpeed(3 * Z_motor_speed);
-  digitalWrite(EN, LOW);
-  digitalWrite(18, HIGH);
-  Z_Motor.setSpeed(-1000);
-  while (true) {
-    Z_Motor.runSpeed();
-  }
-}
-else if (command == "Z insert") {  //instert the lens arm
-  Z_Motor.setMaxSpeed(3 * Z_motor_speed);
-  digitalWrite(EN, LOW);
-  digitalWrite(18, HIGH);
-  Z_Motor.setSpeed(1000);
-  while (true) {
-    Z_Motor.runSpeed();
-  }
-}
-else if (command == "test LED") {  //test the RTI dome
-  test_leds();
-}
-else if (command == "blink") {  //test the serial communication
-  while (1) {
-    digitalWrite(LED_BUILTIN, HIGH);
-    delay(1000);
-    digitalWrite(LED_BUILTIN, LOW);
-    delay(1000);
-  }
-}
 }
